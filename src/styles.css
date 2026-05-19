@@ -70,7 +70,7 @@ body {
 
 /* Global Theme Toggle Button Style (Default: Light/Responsive Backgrounds) */
 .theme-toggle-btn {
-  background: transparent;
+  background-color: var(--bg-secondary);
   border: 1.5px solid var(--border-color);
   color: var(--text-primary);
   font-size: 1.15rem;

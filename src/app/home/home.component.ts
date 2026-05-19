@@ -16,7 +16,7 @@ import { ThemeService } from '../services/theme.service';
         <div class="nav-links">
           <a href="#about">Hakkımızda</a>
           <a href="#features">Özellikler</a>
-          <button class="theme-toggle-btn" (click)="themeService.toggleTheme()" style="background: transparent; border: none; font-size: 1.25rem; cursor: pointer;">
+          <button class="theme-toggle-btn" (click)="themeService.toggleTheme()">
             {{ themeService.isDark() ? '☀️' : '🌙' }}
           </button>
           <button class="btn btn-outline" routerLink="/login">Giriş Yap</button>

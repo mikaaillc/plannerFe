@@ -33,7 +33,7 @@ import { ThemeService } from '../services/theme.service';
   `,
   styles: [`
     .login-container { display: flex; justify-content: center; align-items: center; height: 100vh; background: var(--bg-primary); font-family: 'Inter', sans-serif; position: relative; }
-    .login-theme-toggle { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; background: transparent; border: none; cursor: pointer; }
+    .login-theme-toggle { position: absolute; top: 1.5rem; right: 1.5rem; z-index: 100; }
     .login-card { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 400px; border: 1px solid var(--border-color); }
     h2 { text-align: center; margin-top: 0; color: var(--text-primary); }
     .form-group { margin-bottom: 1.5rem; }

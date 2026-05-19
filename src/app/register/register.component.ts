@@ -62,7 +62,7 @@ import { ThemeService } from '../services/theme.service';
   `,
   styles: [`
     .register-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: var(--bg-primary); font-family: 'Inter', sans-serif; padding: 2rem; box-sizing: border-box; position: relative; }
-    .register-theme-toggle { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; background: transparent; border: none; cursor: pointer; }
+    .register-theme-toggle { position: absolute; top: 1.5rem; right: 1.5rem; z-index: 100; }
     .register-card { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 450px; border: 1px solid var(--border-color); }
     h3 { text-align: center; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.5rem; }
     .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
