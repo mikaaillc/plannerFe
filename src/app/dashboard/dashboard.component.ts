@@ -16,6 +16,7 @@ import { OfferService, Offer } from '../services/offer.service';
           <h1>Şehir Plancıları Platformu</h1>
           <div class="user-info" *ngIf="user">
             <button class="btn btn-profile" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/profile'])">✏️ Profilim</button>
+            <button class="btn btn-profile" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile'])">✏️ Profilim</button>
             <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Şehir Plancısı' : 'Kurum'}})</small></span>
             <button class="btn btn-logout" (click)="logout()">Çıkış</button>
           </div>

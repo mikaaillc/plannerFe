@@ -38,7 +38,11 @@ import { OfferService, Offer, Comment } from '../services/offer.service';
           
           <div class="participants">
             <div class="participant">
-              <strong>Gönderen (Kurum):</strong> {{offer.sender.fullName}}
+              <strong>Gönderen (Kurum):</strong>
+              <span *ngIf="user?.role === 'ROLE_PLANNER'" class="entity-link" (click)="router.navigate(['/entity', offer.sender.id])">
+                🏢 {{offer.sender.fullName}} <small>→ Profili Gör</small>
+              </span>
+              <span *ngIf="user?.role !== 'ROLE_PLANNER'">{{offer.sender.fullName}}</span>
             </div>
             <div class="participant">
               <strong>Alıcı (Şehir Plancısı):</strong> {{offer.receiver.fullName}}
@@ -117,8 +121,11 @@ import { OfferService, Offer, Comment } from '../services/offer.service';
     .price-box .label { font-size: 0.875rem; color: #2f855a; margin-bottom: 0.25rem; }
     .price-box .amount { font-size: 1.5rem; font-weight: 700; color: #276749; }
     
-    .participants { display: flex; gap: 2rem; margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 8px; }
+    .participants { display: flex; gap: 2rem; margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 8px; flex-wrap: wrap; }
     .participant { font-size: 0.95rem; color: #4a5568; }
+    .entity-link { color: #4299e1; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.2s; }
+    .entity-link:hover { color: #3182ce; text-decoration: underline; }
+    .entity-link small { font-size: 0.78rem; color: #a0aec0; }
     
     .description-box h3 { margin-top: 0; font-size: 1.125rem; color: #2d3748; }
     .description-box p { color: #4a5568; line-height: 1.6; white-space: pre-wrap; }
