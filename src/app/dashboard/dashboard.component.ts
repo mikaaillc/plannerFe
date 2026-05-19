@@ -122,6 +122,16 @@ import { OfferService, Offer } from '../services/offer.service';
     .form-control:focus { outline: none; border-color: #4299e1; box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2); }
     .modal-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; }
     .no-data { text-align: center; padding: 4rem 2rem; background: white; border-radius: 12px; border: 1px dashed #cbd5e0; color: #718096; }
+    
+    @media (max-width: 768px) {
+      .nav-content { flex-direction: column; gap: 1rem; text-align: center; }
+      .actions { flex-direction: column; gap: 1rem; }
+      .actions .btn { width: 100%; margin-right: 0 !important; }
+      .offer-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .modal-content { padding: 1.5rem; margin: 1rem; }
+      .modal-actions { flex-direction: column; }
+      .modal-actions .btn { width: 100%; }
+    }
   `]
 })
 export class DashboardComponent implements OnInit {

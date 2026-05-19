@@ -157,7 +157,17 @@ import { OfferService, Offer, Comment } from '../services/offer.service';
     .no-comments { text-align: center; color: #a0aec0; padding: 2rem 0; }
     
     .new-comment { display: flex; flex-direction: column; gap: 1rem; }
-    .new-comment .btn { align-self: flex-end; }
+    .btn-secondary { background: #e2e8f0; color: #4a5568; }
+    .btn-secondary:hover { background: #cbd5e0; }
+    
+    @media (max-width: 768px) {
+      .nav-content { flex-direction: column; gap: 1rem; text-align: center; }
+      .header-section { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .actions { width: 100%; flex-direction: column; }
+      .actions .btn { width: 100%; }
+      .message-input { flex-direction: column; }
+      .message-input .btn { width: 100%; }
+    }
   `]
 })
 export class OfferDetailComponent implements OnInit {

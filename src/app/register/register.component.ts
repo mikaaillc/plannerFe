@@ -70,6 +70,11 @@ import { AuthService } from '../services/auth.service';
     .error-msg { color: #e53e3e; margin-top: 1rem; text-align: center; font-size: 0.875rem; background: #fed7d7; padding: 0.5rem; border-radius: 4px; }
     .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #718096; }
     .login-link a { color: #4299e1; text-decoration: none; font-weight: 600; }
+    
+    @media (max-width: 480px) {
+      .register-container { padding: 1rem; }
+      .register-card { padding: 1.5rem; }
+    }
   `]
 })
 export class RegisterComponent {

@@ -106,6 +106,14 @@ import { OfferService } from '../services/offer.service';
     .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: #4a5568; }
     .form-control { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
     .modal-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    
+    @media (max-width: 768px) {
+      .nav-content { flex-direction: column; gap: 1rem; text-align: center; }
+      .grid { grid-template-columns: 1fr; }
+      .modal-content { padding: 1.5rem; margin: 1rem; }
+      .modal-actions { flex-direction: column; }
+      .modal-actions .btn { width: 100%; }
+    }
   `]
 })
 export class PlannersComponent implements OnInit {

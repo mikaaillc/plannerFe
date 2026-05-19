@@ -96,6 +96,20 @@ import { Router, RouterModule } from '@angular/router';
     .about-card p { color: #718096; line-height: 1.6; }
     
     footer { text-align: center; padding: 2rem; background: #1a202c; color: #a0aec0; }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; padding: 1rem; gap: 1rem; }
+      .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+      .hero { flex-direction: column; padding: 2rem 1rem; text-align: center; }
+      .hero-content { padding-right: 0; margin-bottom: 2rem; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      .hero-buttons { justify-content: center; flex-direction: column; width: 100%; }
+      .hero-buttons .btn { width: 100%; }
+      .about { padding: 3rem 1rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
   `]
 })
 export class HomeComponent {}
