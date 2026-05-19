@@ -1,0 +1,42 @@
+<div class="pricing-container">
+  <h1>Abonelik Planları</h1>
+  <p>Şehir Plancısı veya Tüzel Kişi hesabınızı yükselterek tüm özelliklere erişin.</p>
+  
+  <div *ngIf="currentUser">
+    <div class="badge" *ngIf="currentUser.isPaid">
+      Mevcut Planınız: {{ currentUser.subscriptionType }}
+    </div>
+  </div>
+
+  <div class="pricing-cards">
+    <div class="card">
+      <h3>Aylık Plan</h3>
+      <div class="price">₺499<span style="font-size: 1rem; color: #6b7280;">/ay</span></div>
+      <ul class="features">
+        <li><i>✓</i> Sınırsız Teklif Verme</li>
+        <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
+        <li><i>✓</i> Öncelikli Destek</li>
+        <li><i>✓</i> Gemini AI Asistanı</li>
+      </ul>
+      <button class="btn-subscribe" (click)="subscribe('MONTHLY')" [disabled]="isLoading || currentUser?.subscriptionType === 'MONTHLY'">
+        {{ currentUser?.subscriptionType === 'MONTHLY' ? 'Mevcut Plan' : 'Aylık Abone Ol' }}
+      </button>
+    </div>
+
+    <div class="card" style="border-color: #6366f1; transform: scale(1.05);">
+      <div style="background: #6366f1; color: white; padding: 4px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 10px; font-weight: bold;">EN ÇOK TERCİH EDİLEN</div>
+      <h3>Yıllık Plan</h3>
+      <div class="price">₺4,990<span style="font-size: 1rem; color: #6b7280;">/yıl</span></div>
+      <ul class="features">
+        <li><i>✓</i> Aylık plana göre 2 ay bedava</li>
+        <li><i>✓</i> Sınırsız Teklif Verme</li>
+        <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
+        <li><i>✓</i> Premium Profil Rozeti</li>
+        <li><i>✓</i> Gemini AI Asistanı</li>
+      </ul>
+      <button class="btn-subscribe" (click)="subscribe('ANNUAL')" [disabled]="isLoading || currentUser?.subscriptionType === 'ANNUAL'">
+        {{ currentUser?.subscriptionType === 'ANNUAL' ? 'Mevcut Plan' : 'Yıllık Abone Ol' }}
+      </button>
+    </div>
+  </div>
+</div>

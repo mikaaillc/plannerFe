@@ -129,7 +129,7 @@ export class EntityProfileViewComponent implements OnInit {
   entity: any = null;
   loading = true;
 
-  private apiUrl = 'https://plannerbe.onrender.com/api/users';
+  private apiUrl = 'http://localhost:8080/api/users';
 
   constructor(
     private route: ActivatedRoute,

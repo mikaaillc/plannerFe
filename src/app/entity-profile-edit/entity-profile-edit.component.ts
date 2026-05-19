@@ -179,7 +179,7 @@ export class EntityProfileEditComponent implements OnInit {
     location: '', phone: '', website: ''
   };
 
-  private apiUrl = 'https://plannerbe.onrender.com/api/users';
+  private apiUrl = 'http://localhost:8080/api/users';
 
   constructor(
     private authService: AuthService,

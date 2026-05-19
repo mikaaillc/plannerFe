@@ -8,14 +8,16 @@ export interface User {
   username: string;
   fullName: string;
   role: string;
+  isPaid?: boolean;
+  subscriptionType?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://plannerbe.onrender.com/api/auth';
-  private userUrl = 'https://plannerbe.onrender.com/api/users';
+  private apiUrl = 'http://localhost:8080/api/auth';
+  private userUrl = 'http://localhost:8080/api/users';
   
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -48,5 +50,16 @@ export class AuthService {
 
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl);
+  }
+
+  subscribe(userId: number, type: string): Observable<User> {
+    return this.http.post<User>(`${this.userUrl}/${userId}/subscribe`, { type }).pipe(
+      tap(user => {
+        if (this.currentUserSubject.value?.id === user.id) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+      })
+    );
   }
 }

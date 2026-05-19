@@ -25,7 +25,7 @@ export interface Comment {
   providedIn: 'root'
 })
 export class OfferService {
-  private apiUrl = 'https://plannerbe.onrender.com/api/offers';
+  private apiUrl = 'http://localhost:8080/api/offers';
 
   constructor(private http: HttpClient) {}
 

@@ -1,0 +1,52 @@
+<div class="admin-container">
+  <h1>Yönetim Paneli</h1>
+
+  <h2>Sistem Kullanıcıları</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Kullanıcı Adı</th>
+        <th>Ad Soyad</th>
+        <th>Rol</th>
+        <th>Abonelik</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <span class="badge" [ngClass]="user.isPaid ? 'badge-paid' : 'badge-unpaid'">
+            {{ user.isPaid ? (user.subscriptionType || 'ÜCRETLİ') : 'ÜCRETSİZ' }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Hata Bildirimleri</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Bildiren</th>
+        <th>Tarih</th>
+        <th>Mesaj (Bağlam)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let report of errorReports">
+        <td>{{ report.id }}</td>
+        <td>{{ report.reportedBy.fullName }} ({{ report.reportedBy.username }})</td>
+        <td>{{ report.createdAt | date:'short' }}</td>
+        <td style="white-space: pre-wrap;">{{ report.message }}</td>
+      </tr>
+      <tr *ngIf="errorReports.length === 0">
+        <td colspan="4">Henüz hata bildirimi bulunmamaktadır.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

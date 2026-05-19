@@ -96,7 +96,7 @@ export class RegisterComponent {
   isLoading = false;
 
   // Render Backend URL (Hardcoded as requested before)
-  private apiUrl = 'https://plannerbe.onrender.com/api/auth/register';
+  private apiUrl = 'http://localhost:8080/api/auth/register';
 
   constructor(
     private http: HttpClient,

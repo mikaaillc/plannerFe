@@ -58,6 +58,38 @@ import { ThemeService } from '../services/theme.service';
           </div>
         </div>
       </section>
+
+      <section id="pricing" class="pricing">
+        <h2>Üyelik Planları</h2>
+        <p class="pricing-subtitle">İhtiyacınıza en uygun planı seçin ve hemen teklifleşmeye başlayın.</p>
+        <div class="pricing-cards">
+          <div class="pricing-card">
+            <h3>Aylık Plan</h3>
+            <div class="price">₺499<span>/ay</span></div>
+            <ul class="features">
+              <li><i>✓</i> Sınırsız Teklif Verme</li>
+              <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
+              <li><i>✓</i> Öncelikli Destek</li>
+              <li><i>✓</i> Gemini AI Asistanı</li>
+            </ul>
+            <button class="btn btn-primary" style="width: 100%" routerLink="/register">Hemen Abone Ol</button>
+          </div>
+
+          <div class="pricing-card popular">
+            <div class="popular-badge">EN ÇOK TERCİH EDİLEN</div>
+            <h3>Yıllık Plan</h3>
+            <div class="price">₺4,990<span>/yıl</span></div>
+            <ul class="features">
+              <li><i>✓</i> Aylık plana göre 2 ay bedava</li>
+              <li><i>✓</i> Sınırsız Teklif Verme</li>
+              <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
+              <li><i>✓</i> Premium Profil Rozeti</li>
+              <li><i>✓</i> Gemini AI Asistanı</li>
+            </ul>
+            <button class="btn btn-primary" style="width: 100%" routerLink="/register">Yıllık Abone Ol</button>
+          </div>
+        </div>
+      </section>
       
       <footer>
         <p>&copy; 2026 CityPlanner. Tüm hakları saklıdır.</p>
@@ -98,6 +130,22 @@ import { ThemeService } from '../services/theme.service';
     .icon { font-size: 3rem; margin-bottom: 1.5rem; }
     .about-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary); }
     .about-card p { color: var(--text-secondary); line-height: 1.6; }
+
+    .pricing { padding: 6rem 4rem; background: var(--bg-secondary); text-align: center; }
+    .pricing h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-primary); }
+    .pricing-subtitle { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 3rem; }
+    .pricing-cards { display: flex; justify-content: center; gap: 2rem; max-width: 900px; margin: 0 auto; }
+    .pricing-card { background: var(--card-bg); border-radius: 16px; padding: 2.5rem; width: 100%; max-width: 380px; border: 1px solid var(--border-color); text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; position: relative; }
+    .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+    .pricing-card h3 { font-size: 1.5rem; color: var(--text-primary); margin-bottom: 1rem; }
+    .pricing-card .price { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 2rem; }
+    .pricing-card .price span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; }
+    .pricing-card .features { list-style: none; padding: 0; margin-bottom: 2rem; }
+    .pricing-card .features li { margin-bottom: 1rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; }
+    .pricing-card .features li i { color: #10b981; font-style: normal; }
+    .pricing-card.popular { border-color: var(--primary-color); border-width: 2px; transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+    .pricing-card.popular:hover { transform: scale(1.05) translateY(-5px); }
+    .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
     
     footer { text-align: center; padding: 2rem; background: var(--bg-navbar); color: #a0aec0; }
     

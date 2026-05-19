@@ -8,6 +8,8 @@ import { PlannersComponent } from './planners/planners.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EntityProfileEditComponent } from './entity-profile-edit/entity-profile-edit.component';
 import { EntityProfileViewComponent } from './entity-profile-view/entity-profile-view.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +21,9 @@ export const routes: Routes = [
   { path: 'entity-profile', component: EntityProfileEditComponent },
   { path: 'entity/:id', component: EntityProfileViewComponent },
   { path: 'offer/:id', component: OfferDetailComponent },
+  { path: 'admin', component: AdminDashboardComponent },
+  { path: 'subscribe', component: SubscriptionComponent },
   { path: '**', redirectTo: '' }
 ];
+
 

@@ -86,8 +86,11 @@ import { ThemeService } from '../services/theme.service';
 
             <!-- Teklif Gönder -->
             <div class="card-footer">
-              <button class="btn-offer" (click)="openOfferModal(planner)">
+              <button class="btn-offer" (click)="openOfferModal(planner)" *ngIf="user?.isPaid">
                 📨 Teklif Gönder
+              </button>
+              <button class="btn-offer disabled" disabled *ngIf="!user?.isPaid" title="Teklif vermek için abone olmalısınız.">
+                🔒 Abonelik Gerektirir
               </button>
             </div>
 
