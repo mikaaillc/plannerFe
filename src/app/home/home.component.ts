@@ -99,7 +99,8 @@ import { ThemeService } from '../services/theme.service';
   styles: [`
     .home-container { font-family: 'Inter', sans-serif; color: var(--text-primary); background: var(--bg-primary); min-height: 100vh; }
     .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 4rem; background: var(--card-bg); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
-    .logo img { height: 50px; }
+    .logo img { height: 75px; transition: filter 0.3s ease; }
+    :host-context(.dark) .logo img { filter: brightness(0) invert(1); }
     .nav-links { display: flex; gap: 2rem; align-items: center; }
     .nav-links a { text-decoration: none; color: var(--text-secondary); font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--primary-color); }
