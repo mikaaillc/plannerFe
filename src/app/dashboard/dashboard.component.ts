@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private offerService: OfferService,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit() {
