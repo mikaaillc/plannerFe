@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +12,11 @@ import { AuthService } from '../services/auth.service';
   imports: [CommonModule, FormsModule, RouterModule],
   template: `
     <div class="register-container">
+      <!-- Dark/Light Theme Toggle for Register Screen -->
+      <button class="theme-toggle-btn register-theme-toggle" (click)="themeService.toggleTheme()">
+        {{ themeService.isDark() ? '☀️' : '🌙' }}
+      </button>
+
       <div class="register-card">
         <h2 (click)="router.navigate(['/'])" style="cursor:pointer; text-align:center; color:#4299e1;">&larr; CityPlanner</h2>
         <h3>Hesap Oluştur</h3>
@@ -55,21 +61,22 @@ import { AuthService } from '../services/auth.service';
     </div>
   `,
   styles: [`
-    .register-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); font-family: 'Inter', sans-serif; padding: 2rem; box-sizing: border-box; }
-    .register-card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 450px; }
-    h3 { text-align: center; margin-top: 1rem; margin-bottom: 0.5rem; color: #2d3748; font-size: 1.5rem; }
-    .subtitle { text-align: center; color: #718096; margin-bottom: 2rem; font-size: 0.95rem; }
+    .register-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: var(--bg-primary); font-family: 'Inter', sans-serif; padding: 2rem; box-sizing: border-box; position: relative; }
+    .register-theme-toggle { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.5rem; background: transparent; border: none; cursor: pointer; }
+    .register-card { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 450px; border: 1px solid var(--border-color); }
+    h3 { text-align: center; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.5rem; }
+    .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
     .form-group { margin-bottom: 1.25rem; }
-    .form-group label { display: block; margin-bottom: 0.5rem; color: #4a5568; font-weight: 500; font-size: 0.95rem; }
-    .form-control { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; transition: border-color 0.2s; }
-    .form-control:focus { outline: none; border-color: #4299e1; box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2); }
+    .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-weight: 500; font-size: 0.95rem; }
+    .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--input-border); border-radius: 6px; box-sizing: border-box; font-size: 1rem; font-family: inherit; transition: border-color 0.2s; background: var(--input-bg); color: var(--text-primary); }
+    .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2); }
     .btn { width: 100%; padding: 0.85rem; border: none; border-radius: 6px; cursor: pointer; color: white; font-size: 1rem; font-weight: 600; transition: background-color 0.2s; margin-top: 1rem; }
-    .btn-primary { background: #4299e1; }
-    .btn-primary:hover { background: #3182ce; }
-    .btn-primary:disabled { background: #a0aec0; cursor: not-allowed; }
+    .btn-primary { background: var(--primary-color); }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; }
     .error-msg { color: #e53e3e; margin-top: 1rem; text-align: center; font-size: 0.875rem; background: #fed7d7; padding: 0.5rem; border-radius: 4px; }
-    .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #718096; }
-    .login-link a { color: #4299e1; text-decoration: none; font-weight: 600; }
+    .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .login-link a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
     
     @media (max-width: 480px) {
       .register-container { padding: 1rem; }
@@ -91,7 +98,11 @@ export class RegisterComponent {
   // Render Backend URL (Hardcoded as requested before)
   private apiUrl = 'https://plannerbe.onrender.com/api/auth/register';
 
-  constructor(private http: HttpClient, public router: Router) {}
+  constructor(
+    private http: HttpClient,
+    public router: Router,
+    public themeService: ThemeService
+  ) {}
 
   register() {
     if (!this.user.username || !this.user.password || !this.user.fullName) {

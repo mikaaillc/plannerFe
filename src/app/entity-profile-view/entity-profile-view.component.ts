@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-entity-profile-view',
@@ -13,7 +14,9 @@ import { HttpClient } from '@angular/common/http';
         <div class="nav-content">
           <button class="back-btn" (click)="router.navigate(['/dashboard'])">← Geri Dön</button>
           <span class="page-title">Kurum Profili</span>
-          <span></span>
+          <button class="theme-toggle-btn" (click)="themeService.toggleTheme()">
+            {{ themeService.isDark() ? '☀️' : '🌙' }}
+          </button>
         </div>
       </nav>
 
@@ -76,40 +79,40 @@ import { HttpClient } from '@angular/common/http';
     </div>
   `,
   styles: [`
-    .page { min-height: 100vh; background: #f1f5f9; font-family: 'Inter', sans-serif; }
-    .navbar { background: #1a202c; color: white; padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 100; }
+    .page { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; }
+    .navbar { background: var(--bg-navbar); color: white; padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 100; }
     .nav-content { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; }
     .back-btn { background: transparent; border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer; }
     .back-btn:hover { background: rgba(255,255,255,0.1); }
     .page-title { font-weight: 600; font-size: 1rem; }
 
-    .loading { text-align: center; padding: 5rem; color: #718096; }
-    .spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top-color: #805ad5; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+    .loading { text-align: center; padding: 5rem; color: var(--text-muted); }
+    .spinner { width: 40px; height: 40px; border: 4px solid var(--border-color); border-top-color: var(--purple-primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .profile-wrapper { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
 
-    .hero-section { background: white; border-radius: 16px; padding: 2.5rem; display: flex; gap: 2rem; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 2rem; }
-    .avatar-large { min-width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, #805ad5, #d53f8c); color: white; font-size: 2.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(128,90,213,0.3); }
-    .hero-info h1 { margin: 0 0 0.5rem; font-size: 1.75rem; color: #1a202c; }
+    .hero-section { background: var(--card-bg); border-radius: 16px; padding: 2.5rem; display: flex; gap: 2rem; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-bottom: 2rem; }
+    .avatar-large { min-width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-primary), #d53f8c); color: white; font-size: 2.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(128,90,213,0.3); }
+    .hero-info h1 { margin: 0 0 0.5rem; font-size: 1.75rem; color: var(--text-primary); }
     .role-badge { background: #faf5ff; color: #6b46c1; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; margin-bottom: 0.75rem; }
     .meta-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .meta-item { font-size: 0.875rem; color: #718096; background: #f7fafc; padding: 0.25rem 0.6rem; border-radius: 6px; border: 1px solid #e2e8f0; }
+    .meta-item { font-size: 0.875rem; color: var(--text-secondary); background: var(--bg-primary); padding: 0.25rem 0.6rem; border-radius: 6px; border: 1px solid var(--border-color); }
 
     .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .info-card { background: white; border-radius: 12px; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
+    .info-card { background: var(--card-bg); border-radius: 12px; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
     .info-card.full-width { grid-column: 1 / -1; }
-    .info-card h2 { margin: 0 0 1rem; font-size: 1rem; color: #2d3748; padding-bottom: 0.75rem; border-bottom: 2px solid #edf2f7; }
-    .info-card p { margin: 0; color: #4a5568; line-height: 1.7; font-size: 0.95rem; }
+    .info-card h2 { margin: 0 0 1rem; font-size: 1rem; color: var(--text-primary); padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-light); }
+    .info-card p { margin: 0; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; }
     .projects-text { white-space: pre-line; }
 
     .chip-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .chip { background: #faf5ff; color: #6b46c1; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.825rem; font-weight: 500; border: 1px solid #e9d8fd; }
 
-    .empty-profile { text-align: center; padding: 4rem 2rem; background: white; border-radius: 16px; border: 2px dashed #e2e8f0; }
+    .empty-profile { text-align: center; padding: 4rem 2rem; background: var(--card-bg); border-radius: 16px; border: 2px dashed var(--border-color); }
     .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .empty-profile h3 { color: #4a5568; margin-bottom: 0.5rem; }
-    .empty-profile p { color: #a0aec0; }
+    .empty-profile h3 { color: var(--text-primary); margin-bottom: 0.5rem; }
+    .empty-profile p { color: var(--text-muted); }
 
     .not-found { text-align: center; padding: 4rem; }
 
@@ -131,7 +134,8 @@ export class EntityProfileViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    public router: Router
+    public router: Router,
+    public themeService: ThemeService
   ) {}
 
   ngOnInit() {

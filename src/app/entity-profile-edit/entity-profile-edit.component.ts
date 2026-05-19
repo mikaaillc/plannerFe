@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, User } from '../services/auth.service';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-entity-profile-edit',
@@ -15,6 +16,9 @@ import { AuthService, User } from '../services/auth.service';
         <div class="nav-content">
           <button class="back-btn" (click)="router.navigate(['/dashboard'])">← Dashboard'a Dön</button>
           <span class="page-title">Kurum Profilim</span>
+          <button class="theme-toggle-btn" (click)="themeService.toggleTheme()">
+            {{ themeService.isDark() ? '☀️' : '🌙' }}
+          </button>
           <span class="user-chip">{{ user?.fullName }}</span>
         </div>
       </nav>
@@ -114,44 +118,44 @@ import { AuthService, User } from '../services/auth.service';
     </div>
   `,
   styles: [`
-    .page { min-height: 100vh; background: #f1f5f9; font-family: 'Inter', sans-serif; }
-    .navbar { background: #1a202c; color: white; padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 100; }
+    .page { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; }
+    .navbar { background: var(--bg-navbar); color: white; padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 100; }
     .nav-content { display: flex; align-items: center; gap: 1rem; max-width: 1200px; margin: 0 auto; }
     .back-btn { background: transparent; border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer; white-space: nowrap; }
     .back-btn:hover { background: rgba(255,255,255,0.1); }
     .page-title { font-size: 1rem; font-weight: 600; flex: 1; text-align: center; }
-    .user-chip { background: #2d3748; padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.8rem; white-space: nowrap; }
+    .user-chip { background: #2d3748; padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.8rem; white-space: nowrap; color: white; }
 
     .page-body { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
     .preview-panel { position: sticky; top: 70px; align-self: start; }
-    .preview-card { background: white; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-    .avatar-circle { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #805ad5, #d53f8c); color: white; font-size: 2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
-    .preview-card h2 { font-size: 1.25rem; color: #2d3748; margin-bottom: 0.5rem; }
+    .preview-card { background: var(--card-bg); border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
+    .avatar-circle { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-primary), #d53f8c); color: white; font-size: 2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .preview-card h2 { font-size: 1.25rem; color: var(--text-primary); margin-bottom: 0.5rem; }
     .role-badge { background: #faf5ff; color: #6b46c1; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-block; margin-bottom: 1rem; }
-    .preview-location, .preview-phone, .preview-website { font-size: 0.875rem; color: #718096; margin-bottom: 0.25rem; }
-    .preview-bio { margin-top: 1rem; text-align: left; border-top: 1px solid #edf2f7; padding-top: 1rem; }
-    .preview-bio h4 { font-size: 0.875rem; color: #4a5568; margin-bottom: 0.5rem; }
-    .preview-bio p { font-size: 0.85rem; color: #718096; line-height: 1.6; }
+    .preview-location, .preview-phone, .preview-website { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+    .preview-bio { margin-top: 1rem; text-align: left; border-top: 1px solid var(--border-light); padding-top: 1rem; }
+    .preview-bio h4 { font-size: 0.875rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .preview-bio p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
     .skill-chips, .skill-preview { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; justify-content: center; }
     .chip { background: #faf5ff; color: #6b46c1; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; border: 1px solid #e9d8fd; }
     .skill-preview { justify-content: flex-start; margin-top: 0.75rem; }
 
     .edit-panel { display: flex; flex-direction: column; gap: 1.5rem; }
-    .section-card { background: white; border-radius: 12px; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
-    .section-title { font-size: 1rem; font-weight: 700; color: #2d3748; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid #edf2f7; }
+    .section-card { background: var(--card-bg); border-radius: 12px; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
+    .section-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border-light); }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { margin-bottom: 1rem; }
     .form-group:last-child { margin-bottom: 0; }
-    .form-group label { display: block; font-weight: 500; font-size: 0.875rem; color: #4a5568; margin-bottom: 0.4rem; }
-    .form-group label small { font-weight: 400; color: #a0aec0; }
-    .form-control { width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 0.95rem; color: #2d3748; transition: border-color 0.2s; resize: vertical; box-sizing: border-box; }
-    .form-control:focus { outline: none; border-color: #805ad5; box-shadow: 0 0 0 3px rgba(128,90,213,0.15); }
+    .form-group label { display: block; font-weight: 500; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.4rem; }
+    .form-group label small { font-weight: 400; color: var(--text-muted); }
+    .form-control { width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid var(--input-border); border-radius: 8px; font-size: 0.95rem; color: var(--text-primary); transition: border-color 0.2s; resize: vertical; box-sizing: border-box; background: var(--input-bg); }
+    .form-control:focus { outline: none; border-color: var(--purple-primary); box-shadow: 0 0 0 3px rgba(128,90,213,0.15); }
 
     .save-bar { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; flex-wrap: wrap; }
     .btn { padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
-    .btn-primary { background: #805ad5; color: white; }
-    .btn-primary:hover:not(:disabled) { background: #6b46c1; transform: translateY(-1px); }
-    .btn-primary:disabled { background: #a0aec0; cursor: not-allowed; }
+    .btn-primary { background: var(--purple-primary); color: white; }
+    .btn-primary:hover:not(:disabled) { background: var(--purple-hover); transform: translateY(-1px); }
+    .btn-primary:disabled { background: var(--text-muted); cursor: not-allowed; }
     .success-msg { background: #c6f6d5; color: #276749; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; }
     .error-msg { background: #fed7d7; color: #9b2c2c; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; }
 
@@ -177,7 +181,12 @@ export class EntityProfileEditComponent implements OnInit {
 
   private apiUrl = 'https://plannerbe.onrender.com/api/users';
 
-  constructor(private authService: AuthService, private http: HttpClient, public router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    public router: Router,
+    public themeService: ThemeService
+  ) {}
 
   ngOnInit() {
     this.user = this.authService.getCurrentUser();

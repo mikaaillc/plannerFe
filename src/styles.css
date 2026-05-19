@@ -1,1 +1,103 @@
-/* You can add global styles to this file, and also import other style files */
+/* Define design system colors and tokens for light/dark themes */
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-navbar: #1a202c;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --border-color: #e2e8f0;
+  --border-light: #edf2f7;
+  --card-bg: #ffffff;
+  --card-header-bg: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+  --input-bg: #ffffff;
+  --input-border: #e2e8f0;
+  --primary-color: #4299e1;
+  --primary-hover: #3182ce;
+  --purple-primary: #805ad5;
+  --purple-hover: #6b46c1;
+  --toast-bg: #276749;
+}
+
+:root.dark {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-navbar: #0b0f19;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --border-light: #1e293b;
+  --card-bg: #1e293b;
+  --card-header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --input-bg: #0f172a;
+  --input-border: #334155;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --purple-primary: #a855f7;
+  --purple-hover: #9333ea;
+  --toast-bg: #064e3b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Global Theme Toggle Button Style */
+.theme-toggle-btn {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+/* Light Theme Navbar Override if needed */
+.navbar-light .theme-toggle-btn {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+.navbar-light .theme-toggle-btn:hover {
+  background: var(--border-light);
+  border-color: var(--text-muted);
+}
+
