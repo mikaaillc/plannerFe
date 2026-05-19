@@ -25,7 +25,8 @@ export interface Comment {
   providedIn: 'root'
 })
 export class OfferService {
-  private apiUrl = 'http://localhost:8080/api/offers';
+  // LÜTFEN BURADAKİ LİNKİ KENDİ RENDER LİNKİNİZLE DEĞİŞTİRİN (Örn: https://planner-backend.onrender.com)
+  private apiUrl = 'https://BURAYA-RENDER-LINKINIZ-GELECEK.onrender.com/api/offers';
 
   constructor(private http: HttpClient) {}
 
