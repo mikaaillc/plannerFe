@@ -23,6 +23,7 @@ import { OfferService, Offer } from '../services/offer.service';
 
       <div class="content" *ngIf="user">
         <div class="actions" *ngIf="user.role === 'ROLE_ENTITY'">
+          <button class="btn btn-secondary" style="margin-right: 1rem;" (click)="router.navigate(['/planners'])">Şehir Plancılarını Keşfet</button>
           <button class="btn btn-primary" (click)="showCreateOffer = true">+ Yeni Teklif Oluştur</button>
         </div>
 

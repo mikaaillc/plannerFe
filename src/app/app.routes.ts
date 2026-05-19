@@ -1,12 +1,17 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OfferDetailComponent } from './offer-detail/offer-detail.component';
+import { PlannersComponent } from './planners/planners.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'planners', component: PlannersComponent },
   { path: 'offer/:id', component: OfferDetailComponent },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: '' }
 ];
