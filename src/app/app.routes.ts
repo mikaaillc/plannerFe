@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OfferDetailComponent } from './offer-detail/offer-detail.component';
 import { PlannersComponent } from './planners/planners.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'planners', component: PlannersComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'offer/:id', component: OfferDetailComponent },
   { path: '**', redirectTo: '' }
 ];

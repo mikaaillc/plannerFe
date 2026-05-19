@@ -15,6 +15,7 @@ import { OfferService, Offer } from '../services/offer.service';
         <div class="nav-content">
           <h1>Şehir Plancıları Platformu</h1>
           <div class="user-info" *ngIf="user">
+            <button class="btn btn-profile" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/profile'])">✏️ Profilim</button>
             <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Şehir Plancısı' : 'Kurum'}})</small></span>
             <button class="btn btn-logout" (click)="logout()">Çıkış</button>
           </div>
@@ -92,6 +93,8 @@ import { OfferService, Offer } from '../services/offer.service';
     .btn { padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: 500; transition: all 0.2s; }
     .btn-logout { background: transparent; border: 1px solid #4a5568; color: #e2e8f0; }
     .btn-logout:hover { background: #e53e3e; border-color: #e53e3e; }
+    .btn-profile { background: #2d3748; border: 1px solid #4a5568; color: #e2e8f0; }
+    .btn-profile:hover { background: #4299e1; border-color: #4299e1; }
     .btn-primary { background: #4299e1; }
     .btn-primary:hover { background: #3182ce; }
     .btn-secondary { background: #cbd5e0; color: #4a5568; }
