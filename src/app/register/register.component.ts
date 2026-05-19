@@ -13,9 +13,13 @@ import { ThemeService } from '../services/theme.service';
   template: `
     <div class="register-container">
       <!-- Dark/Light Theme Toggle for Register Screen -->
-      <button class="theme-toggle-btn register-theme-toggle" (click)="themeService.toggleTheme()">
-        {{ themeService.isDark() ? '☀️' : '🌙' }}
-      </button>
+      <label class="theme-switch">
+  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
+  <span class="slider round">
+    <span class="icon sun">☀️</span>
+    <span class="icon moon">🌙</span>
+  </span>
+</label>
 
       <div class="register-card">
         <h2 (click)="router.navigate(['/'])" style="cursor:pointer; text-align:center; color:#4299e1;">&larr; CityPlanner</h2>

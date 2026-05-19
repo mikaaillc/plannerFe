@@ -21,9 +21,13 @@ import { ThemeService } from '../services/theme.service';
             <button class="btn btn-profile" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile'])">✏️ Profilim</button>
             <button class="btn btn-profile" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/subscribe'])">⭐ Abonelik</button>
             <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Şehir Plancısı' : user.role === 'ROLE_ADMIN' ? 'Admin' : 'Kurum'}})</small></span>
-            <button class="theme-toggle-btn" (click)="themeService.toggleTheme()">
-              {{ themeService.isDark() ? '☀️' : '🌙' }}
-            </button>
+            <label class="theme-switch">
+  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
+  <span class="slider round">
+    <span class="icon sun">☀️</span>
+    <span class="icon moon">🌙</span>
+  </span>
+</label>
             <button class="btn btn-logout" (click)="logout()">Çıkış</button>
           </div>
         </div>

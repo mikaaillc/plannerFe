@@ -16,9 +16,13 @@ import { ThemeService } from '../services/theme.service';
         <div class="nav-links">
           <a href="#about">Hakkımızda</a>
           <a href="#features">Özellikler</a>
-          <button class="theme-toggle-btn" (click)="themeService.toggleTheme()">
-            {{ themeService.isDark() ? '☀️' : '🌙' }}
-          </button>
+          <label class="theme-switch">
+  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
+  <span class="slider round">
+    <span class="icon sun">☀️</span>
+    <span class="icon moon">🌙</span>
+  </span>
+</label>
           <button class="btn btn-outline" routerLink="/login">Giriş Yap</button>
           <button class="btn btn-primary" routerLink="/register">Kayıt Ol</button>
         </div>
