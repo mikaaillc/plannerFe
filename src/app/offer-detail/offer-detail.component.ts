@@ -12,21 +12,7 @@ import { ThemeService } from '../services/theme.service';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="dashboard">
-      <nav class="navbar">
-        <div class="nav-content">
-          <h1 (click)="router.navigate(['/dashboard'])" style="cursor: pointer;">&larr; Teklif Detayı</h1>
-          <div class="user-info" *ngIf="user">
-            <label class="theme-switch">
-  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
-  <span class="slider round">
-    <span class="icon sun">☀️</span>
-    <span class="icon moon">🌙</span>
-  </span>
-</label>
-            <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Şehir Plancısı' : 'Kurum'}})</small></span>
-          </div>
-        </div>
-      </nav>
+      
 
       <div class="content" *ngIf="offer">
         <div class="main-card">

@@ -13,20 +13,7 @@ import { ThemeService } from '../services/theme.service';
   template: `
     <div class="planners-container">
       <!-- Navbar -->
-      <nav class="navbar">
-        <div class="nav-content">
-          <button class="back-btn" (click)="router.navigate(['/dashboard'])">← Geri Dön</button>
-          <h1>Şehir Plancıları</h1>
-          <label class="theme-switch">
-  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
-  <span class="slider round">
-    <span class="icon sun">☀️</span>
-    <span class="icon moon">🌙</span>
-  </span>
-</label>
-          <span class="user-badge" *ngIf="user">{{ user.fullName }}</span>
-        </div>
-      </nav>
+      
 
       <div class="content">
         <div class="page-header">

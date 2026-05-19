@@ -13,14 +13,7 @@ import { API_URL } from '../config';
   imports: [CommonModule, FormsModule, RouterModule],
   template: `
     <div class="register-container">
-      <!-- Dark/Light Theme Toggle for Register Screen -->
-      <label class="theme-switch register-theme-toggle">
-  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
-  <span class="slider round">
-    <span class="icon sun">☀️</span>
-    <span class="icon moon">🌙</span>
-  </span>
-</label>
+      
 
       <div class="register-card">
         <h2 (click)="router.navigate(['/'])" style="cursor:pointer; text-align:center; color:#4299e1;">&larr; CityPlanner</h2>

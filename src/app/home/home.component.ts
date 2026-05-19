@@ -9,24 +9,7 @@ import { ThemeService } from '../services/theme.service';
   imports: [CommonModule, RouterModule],
   template: `
     <div class="home-container">
-      <nav class="navbar">
-        <div class="logo">
-          <img src="assets/images/logo.png" alt="CityPlanner Logo">
-        </div>
-        <div class="nav-links">
-          <a href="#about">Hakkımızda</a>
-          <a href="#features">Özellikler</a>
-          <label class="theme-switch">
-  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
-  <span class="slider round">
-    <span class="icon sun">☀️</span>
-    <span class="icon moon">🌙</span>
-  </span>
-</label>
-          <button class="btn btn-outline" routerLink="/login">Giriş Yap</button>
-          <button class="btn btn-primary" routerLink="/register">Kayıt Ol</button>
-        </div>
-      </nav>
+      
 
       <header class="hero">
         <div class="hero-content">

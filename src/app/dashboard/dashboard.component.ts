@@ -12,26 +12,7 @@ import { ThemeService } from '../services/theme.service';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="dashboard">
-      <nav class="navbar">
-        <div class="nav-content">
-          <h1>Şehir Plancıları Platformu</h1>
-          <div class="user-info" *ngIf="user">
-            <button class="btn btn-profile" *ngIf="user.role === 'ROLE_ADMIN'" (click)="router.navigate(['/admin'])">⚙️ Yönetim Paneli</button>
-            <button class="btn btn-profile" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/profile'])">✏️ Profilim</button>
-            <button class="btn btn-profile" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile'])">✏️ Profilim</button>
-            <button class="btn btn-profile" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/subscribe'])">⭐ Abonelik</button>
-            <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Şehir Plancısı' : user.role === 'ROLE_ADMIN' ? 'Admin' : 'Kurum'}})</small></span>
-            <label class="theme-switch">
-  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
-  <span class="slider round">
-    <span class="icon sun">☀️</span>
-    <span class="icon moon">🌙</span>
-  </span>
-</label>
-            <button class="btn btn-logout" (click)="logout()">Çıkış</button>
-          </div>
-        </div>
-      </nav>
+      
 
       <div class="content" *ngIf="user">
         <div class="actions" *ngIf="user.role === 'ROLE_ENTITY'">

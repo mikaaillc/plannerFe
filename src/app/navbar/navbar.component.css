@@ -1,0 +1,37 @@
+.global-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4rem;
+  background: var(--bg-navbar);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-color);
+  color: white; /* Since dashboard navbar is dark by default */
+}
+:host-context(.dark) .global-navbar {
+  background: var(--bg-navbar);
+  color: var(--text-primary);
+}
+.logo-img { height: 50px; }
+.brand-name { font-size: 1.5rem; font-weight: 600; font-family: 'Inter', sans-serif; }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a { text-decoration: none; color: #a0aec0; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: white; }
+
+.user-badge { background: #2d3748; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; }
+.user-badge small { color: #a0aec0; }
+.btn { padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; font-size: 0.95rem; }
+.btn-outline { background: transparent; border: 1px solid #4a5568; color: #e2e8f0; }
+.btn-outline:hover { background: #cbd5e0; color: #1a202c; border-color: #cbd5e0; }
+.btn-primary { background: var(--primary-color); color: white; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-logout { background: transparent; border: 1px solid #4a5568; color: #e2e8f0; }
+.btn-logout:hover { background: #e53e3e; border-color: #e53e3e; }
+
+@media (max-width: 768px) {
+  .global-navbar { flex-direction: column; padding: 1rem; gap: 1rem; }
+  .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+}

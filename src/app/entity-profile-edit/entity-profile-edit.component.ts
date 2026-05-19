@@ -12,20 +12,7 @@ import { ThemeService } from '../services/theme.service';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="page">
-      <nav class="navbar">
-        <div class="nav-content">
-          <button class="back-btn" (click)="router.navigate(['/dashboard'])">← Dashboard'a Dön</button>
-          <span class="page-title">Kurum Profilim</span>
-          <label class="theme-switch">
-  <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
-  <span class="slider round">
-    <span class="icon sun">☀️</span>
-    <span class="icon moon">🌙</span>
-  </span>
-</label>
-          <span class="user-chip">{{ user?.fullName }}</span>
-        </div>
-      </nav>
+      
 
       <div class="page-body">
 
