@@ -1,3 +1,4 @@
+import { API_URL } from '../config';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -25,7 +26,7 @@ export interface Comment {
   providedIn: 'root'
 })
 export class OfferService {
-  private apiUrl = 'http://localhost:8080/api/offers';
+  private apiUrl = API_URL + '/offers';
 
   constructor(private http: HttpClient) {}
 
