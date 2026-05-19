@@ -12,7 +12,7 @@ import { ThemeService } from '../services/theme.service';
   template: `
     <div class="login-container">
       <!-- Dark/Light Theme Toggle for Login Screen -->
-      <label class="theme-switch">
+      <label class="theme-switch login-theme-toggle">
   <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
   <span class="slider round">
     <span class="icon sun">☀️</span>

@@ -85,14 +85,14 @@ body {
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: var(--border-color);
+  background-color: #a0aec0;
   transition: .4s;
   border-radius: 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 6px;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
 }
 .theme-switch .slider:before {
   position: absolute;

@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme.service';
+import { API_URL } from '../config';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import { ThemeService } from '../services/theme.service';
   template: `
     <div class="register-container">
       <!-- Dark/Light Theme Toggle for Register Screen -->
-      <label class="theme-switch">
+      <label class="theme-switch register-theme-toggle">
   <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
   <span class="slider round">
     <span class="icon sun">☀️</span>
@@ -99,8 +100,8 @@ export class RegisterComponent {
   error = '';
   isLoading = false;
 
-  // Render Backend URL (Hardcoded as requested before)
-  private apiUrl = 'http://localhost:8080/api/auth/register';
+  // Render Backend URL
+  private apiUrl = API_URL + '/auth/register';
 
   constructor(
     private http: HttpClient,
