@@ -14,9 +14,8 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  // LÜTFEN BURADAKİ LİNKİ KENDİ RENDER LİNKİNİZLE DEĞİŞTİRİN (Örn: https://planner-backend.onrender.com)
-  private apiUrl = 'https://BURAYA-RENDER-LINKINIZ-GELECEK.onrender.com/api/auth';
-  private userUrl = 'https://BURAYA-RENDER-LINKINIZ-GELECEK.onrender.com/api/users';
+  private apiUrl = 'https://plannerbe.onrender.com/api/auth';
+  private userUrl = 'https://plannerbe.onrender.com/api/users';
   
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
