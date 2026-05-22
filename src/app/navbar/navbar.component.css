@@ -15,7 +15,10 @@
   background: var(--bg-navbar);
   color: var(--text-primary);
 }
-.logo-img { height: 50px; }
+:host-context(.dark) .logo-img {
+  filter: brightness(0) invert(1);
+}
+.logo-img { height: 50px; transition: filter 0.3s ease; }
 .brand-name { font-size: 1.5rem; font-weight: 600; font-family: 'Inter', sans-serif; }
 .nav-links { display: flex; gap: 1.5rem; align-items: center; }
 .nav-links a { text-decoration: none; color: var(--text-secondary); font-weight: 500; transition: color 0.2s; }
@@ -24,8 +27,8 @@
 .user-badge { background: #2d3748; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; }
 .user-badge small { color: #a0aec0; }
 .btn { padding: 0.6rem 1.2rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; font-size: 0.95rem; }
-.btn-outline { background: transparent; border: 1px solid #4a5568; color: #e2e8f0; }
-.btn-outline:hover { background: #cbd5e0; color: #1a202c; border-color: #cbd5e0; }
+.btn-outline { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); }
+.btn-outline:hover { background: var(--primary-color); color: white; border-color: var(--primary-color); }
 .btn-primary { background: var(--primary-color); color: white; }
 .btn-primary:hover { background: var(--primary-hover); }
 .btn-logout { background: transparent; border: 1px solid #4a5568; color: #e2e8f0; }
