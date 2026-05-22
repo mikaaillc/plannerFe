@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, User } from '../services/auth.service';
-import { OfferService } from '../services/offer.service';
 import { ThemeService } from '../services/theme.service';
 
 @Component({
@@ -12,13 +11,10 @@ import { ThemeService } from '../services/theme.service';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="planners-container">
-      <!-- Navbar -->
-      
-
       <div class="content">
         <div class="page-header">
           <h2>Plancıları Keşfedin</h2>
-          <p>Projeleriniz için en uygun şehir plancısını bulun, profillerini inceleyin ve hemen teklif gönderin.</p>
+          <p>Projeleriniz için en uygun şehir plancısını bulun ve profillerini inceleyin.</p>
           <span class="count-badge">{{ planners.length }} Plancı Listelendi</span>
         </div>
 
@@ -75,16 +71,6 @@ import { ThemeService } from '../services/theme.service';
               <p>Henüz portfolyo bilgisi eklenmemiş.</p>
             </div>
 
-            <!-- Teklif Gönder -->
-            <div class="card-footer">
-              <button class="btn-offer" (click)="openOfferModal(planner)" *ngIf="user?.isPaid">
-                📨 Teklif Gönder
-              </button>
-              <button class="btn-offer disabled" disabled *ngIf="!user?.isPaid" title="Teklif vermek için abone olmalısınız.">
-                🔒 Abonelik Gerektirir
-              </button>
-            </div>
-
           </div>
         </div>
 
@@ -95,42 +81,6 @@ import { ThemeService } from '../services/theme.service';
           <p>Sisteme plancı kaydı yapıldığında burada görünecekler.</p>
         </div>
       </div>
-
-      <!-- Teklif Modalı -->
-      <div class="modal-backdrop" *ngIf="showModal" (click)="showModal = false">
-        <div class="modal-box" (click)="$event.stopPropagation()">
-          <div class="modal-header">
-            <h3>📨 Teklif Gönder</h3>
-            <p>Alıcı: <strong>{{ selectedPlanner?.fullName }}</strong></p>
-            <button class="close-btn" (click)="showModal = false">✕</button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Başlık</label>
-              <input type="text" [(ngModel)]="newOffer.title" class="form-control"
-                placeholder="Örn: X Bölgesi İmar Planı Hazırlanması" />
-            </div>
-            <div class="form-group">
-              <label>İş Detayı / Açıklama</label>
-              <textarea [(ngModel)]="newOffer.description" class="form-control" rows="4"
-                placeholder="Projenin detaylarını açıklayın..."></textarea>
-            </div>
-            <div class="form-group">
-              <label>Önerilen Ücret (₺)</label>
-              <input type="number" [(ngModel)]="newOffer.proposedPrice" class="form-control" min="0" />
-            </div>
-          </div>
-          <div class="modal-actions">
-            <button class="btn-cancel" (click)="showModal = false">İptal</button>
-            <button class="btn-send" (click)="sendOffer()" [disabled]="isSending">
-              {{ isSending ? 'Gönderiliyor...' : '📨 Teklifi Gönder' }}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Toast Bildirimi -->
-      <div class="toast" *ngIf="toastMsg">✅ {{ toastMsg }}</div>
     </div>
   `,
   styles: [`
@@ -192,50 +142,18 @@ import { ThemeService } from '../services/theme.service';
     .read-more { background: none; border: none; color: var(--primary-color); font-size: 0.8rem; font-weight: 600; cursor: pointer; padding: 0.3rem 0; display: block; margin-top: 0.4rem; }
     .read-more:hover { text-decoration: underline; }
 
-    /* Footer */
-    .card-footer { padding: 1.1rem 1.5rem; border-top: 1px solid var(--border-light); background: var(--bg-primary); }
-    .btn-offer { width: 100%; padding: 0.7rem; background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 6px rgba(66,153,225,0.25); }
-    .btn-offer:hover { background: linear-gradient(135deg, var(--primary-hover), #2b6cb0); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(66,153,225,0.35); }
-
     /* Empty state */
     .empty-state { text-align: center; padding: 5rem 2rem; background: var(--card-bg); border-radius: 16px; border: 2px dashed var(--border-color); }
     .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
     .empty-state h3 { color: var(--text-primary); margin-bottom: 0.5rem; }
     .empty-state p { color: var(--text-muted); }
 
-    /* Modal */
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; backdrop-filter: blur(4px); }
-    .modal-box { background: var(--card-bg); border-radius: 16px; width: 100%; max-width: 500px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid var(--border-color); }
-    .modal-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-light); position: relative; }
-    .modal-header h3 { margin: 0 0 0.2rem; color: var(--text-primary); font-size: 1.05rem; }
-    .modal-header p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
-    .close-btn { position: absolute; top: 1rem; right: 1rem; background: var(--bg-primary); border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 0.85rem; color: var(--text-primary); }
-    .close-btn:hover { background: var(--border-light); }
-    .modal-body { padding: 1.25rem 1.5rem; }
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.35rem; }
-    .form-control { width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid var(--input-border); border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; font-family: inherit; transition: border-color 0.2s; background: var(--input-bg); color: var(--text-primary); }
-    .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(66,153,225,0.15); }
-    .modal-actions { display: flex; gap: 0.75rem; padding: 1rem 1.5rem; border-top: 1px solid var(--border-light); }
-    .btn-cancel { flex: 1; padding: 0.7rem; border: 1.5px solid var(--input-border); border-radius: 8px; background: var(--bg-primary); color: var(--text-secondary); font-weight: 600; cursor: pointer; }
-    .btn-cancel:hover { background: var(--border-light); }
-    .btn-send { flex: 2; padding: 0.7rem; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-    .btn-send:hover:not(:disabled) { background: var(--primary-hover); }
-    .btn-send:disabled { background: var(--text-muted); cursor: not-allowed; }
-
-
-    /* Toast */
-    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: #276749; color: white; padding: 0.85rem 2rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 9999; animation: slideUp 0.3s ease; white-space: nowrap; }
-    @keyframes slideUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-
     /* Mobile */
     @media (max-width: 768px) {
       .nav-content { flex-wrap: wrap; }
       .navbar h1 { order: -1; width: 100%; text-align: left; font-size: 1rem; }
       .grid { grid-template-columns: 1fr; }
-      .modal-actions { flex-direction: column; }
       .content { padding: 1.5rem 1rem; }
-      .toast { width: 90%; text-align: center; white-space: normal; }
     }
   `]
 })
@@ -244,21 +162,8 @@ export class PlannersComponent implements OnInit {
   planners: any[] = [];
   loading = true;
 
-  showModal = false;
-  selectedPlanner: any = null;
-  isSending = false;
-  toastMsg = '';
-
-  newOffer = {
-    title: '',
-    description: '',
-    proposedPrice: 0,
-    receiverId: null as any
-  };
-
   constructor(
     private authService: AuthService,
-    private offerService: OfferService,
     public router: Router,
     public themeService: ThemeService
   ) {}
@@ -292,28 +197,5 @@ export class PlannersComponent implements OnInit {
 
   toggleExpand(planner: any) {
     planner._expanded = !planner._expanded;
-  }
-
-  openOfferModal(planner: any) {
-    this.selectedPlanner = planner;
-    this.newOffer = { title: '', description: '', proposedPrice: 0, receiverId: planner.id };
-    this.showModal = true;
-  }
-
-  sendOffer() {
-    if (!this.user || !this.selectedPlanner) return;
-    this.isSending = true;
-    const data = { ...this.newOffer, senderId: this.user.id };
-    this.offerService.createOffer(data).subscribe({
-      next: () => {
-        this.isSending = false;
-        this.showModal = false;
-        this.toastMsg = `${this.selectedPlanner.fullName} adlı plancıya teklif gönderildi!`;
-        setTimeout(() => this.toastMsg = '', 3500);
-      },
-      error: () => {
-        this.isSending = false;
-      }
-    });
   }
 }
