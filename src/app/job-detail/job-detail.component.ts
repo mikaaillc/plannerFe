@@ -129,20 +129,20 @@ import { Location } from '@angular/common';
     .description { line-height: 1.6; color: var(--text-secondary); font-size: 1rem; white-space: pre-wrap; }
     
     .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-    .info-box { background: var(--bg-navbar); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); }
+    .info-box { background: var(--bg-secondary); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--border-color); }
     .box-label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem; }
     .box-value { display: block; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
     
     .planner-details-section { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-light); }
     .planner-details-section h3 { margin-top: 0; margin-bottom: 1.5rem; font-size: 1.25rem; color: var(--primary-color); }
     .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-    .spec-item { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-navbar); }
+    .spec-item { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); }
     .spec-item.has-it { border-left: 4px solid #48bb78; }
     .spec-item.lacks-it { border-left: 4px solid #f56565; opacity: 0.7; }
     .spec-item .icon { font-size: 1.2rem; }
     .spec-item .text { font-weight: 500; font-size: 0.95rem; }
     
-    .card-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border-light); background: var(--bg-navbar); display: flex; justify-content: flex-end; }
+    .card-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border-light); background: var(--bg-secondary); display: flex; justify-content: flex-end; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;}
     .btn { padding: 0.8rem 2rem; border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
     .btn-primary { background: var(--primary-color); color: white; }
     .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }

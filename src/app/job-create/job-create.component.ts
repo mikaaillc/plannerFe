@@ -124,7 +124,7 @@ import { AuthService, User } from '../services/auth.service';
     .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--input-border); border-radius: 6px; box-sizing: border-box; background: var(--input-bg); color: var(--text-primary); font-family: inherit; font-size:1rem; transition: border-color 0.2s; }
     .form-control:focus { outline:none; border-color: var(--primary-color); }
     
-    .planner-details-box { background: var(--bg-navbar); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+    .planner-details-box { background: var(--bg-secondary); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid var(--border-color); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
     .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
     .checkbox-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; cursor: pointer; color: var(--text-primary); }
     .checkbox-label input { width: 18px; height: 18px; cursor: pointer; }
