@@ -9,7 +9,7 @@
   top: 0;
   z-index: 1000;
   border-bottom: 1px solid var(--border-color);
-  color: white; /* Since dashboard navbar is dark by default */
+  color: var(--text-primary);
 }
 :host-context(.dark) .global-navbar {
   background: var(--bg-navbar);
@@ -18,8 +18,8 @@
 .logo-img { height: 50px; }
 .brand-name { font-size: 1.5rem; font-weight: 600; font-family: 'Inter', sans-serif; }
 .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-.nav-links a { text-decoration: none; color: #a0aec0; font-weight: 500; transition: color 0.2s; }
-.nav-links a:hover { color: white; }
+.nav-links a { text-decoration: none; color: var(--text-secondary); font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--primary-color); }
 
 .user-badge { background: #2d3748; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; }
 .user-badge small { color: #a0aec0; }
