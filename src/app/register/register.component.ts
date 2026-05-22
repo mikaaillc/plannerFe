@@ -20,19 +20,12 @@ import { API_URL } from '../config';
         <p class="subtitle">Platforma katılmak için bilgilerinizi girin.</p>
         
         <div class="form-group">
-          <label>Kullanıcı Türü</label>
-          <select [(ngModel)]="user.role" class="form-control">
-            <option value="ROLE_PLANNER">Şehir Plancısı</option>
-            <option value="ROLE_ENTITY">Kurum / Tüzel Kişi</option>
+          <label>Profil Tipi</label>
+          <select [(ngModel)]="profileType" (change)="onProfileTypeChange()" class="form-control">
+            <option value="PLANNER">Şehir Plancısı</option>
+            <option value="KAMU">Kamu Kurumu</option>
+            <option value="TUZEL">Tüzel Kişi / Firma</option>
           </select>
-        </div>
-
-        <div class="form-group" *ngIf="user.role === 'ROLE_ENTITY'">
-          <label>Kurum Tipi</label>
-          <div style="display: flex; gap: 1rem;">
-            <label><input type="radio" [(ngModel)]="user.entityType" value="KAMU" name="entityType"> Kamu Kurumu</label>
-            <label><input type="radio" [(ngModel)]="user.entityType" value="TUZEL" name="entityType"> Tüzel Kişi</label>
-          </div>
         </div>
 
         <div class="form-group" *ngIf="user.role === 'ROLE_PLANNER'">
@@ -102,12 +95,14 @@ import { API_URL } from '../config';
   `]
 })
 export class RegisterComponent {
+  profileType: string = 'PLANNER';
+
   user = {
     username: '',
     password: '',
     fullName: '',
     role: 'ROLE_PLANNER',
-    entityType: 'TUZEL',
+    entityType: '',
     karne: 'A',
     completedWorks: ''
   };
@@ -121,6 +116,19 @@ export class RegisterComponent {
     public router: Router,
     public themeService: ThemeService
   ) {}
+
+  onProfileTypeChange() {
+    if (this.profileType === 'PLANNER') {
+      this.user.role = 'ROLE_PLANNER';
+      this.user.entityType = '';
+    } else if (this.profileType === 'KAMU') {
+      this.user.role = 'ROLE_ENTITY';
+      this.user.entityType = 'KAMU';
+    } else if (this.profileType === 'TUZEL') {
+      this.user.role = 'ROLE_ENTITY';
+      this.user.entityType = 'TUZEL';
+    }
+  }
 
   register() {
     if (!this.user.username || !this.user.password || !this.user.fullName) {
@@ -150,3 +158,4 @@ export class RegisterComponent {
     });
   }
 }
+

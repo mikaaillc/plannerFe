@@ -21,7 +21,7 @@ import { ThemeService } from '../services/theme.service';
           <div class="preview-card">
             <div class="avatar-circle entity">{{ getInitials() }}</div>
             <h2>{{ form.fullName || user?.fullName }}</h2>
-            <span class="role-badge">🏢 Tüzel Kişi / Kurum</span>
+            <span class="role-badge">🏢 {{ user?.entityType === 'KAMU' ? 'Kamu Kurumu' : (user?.entityType === 'TUZEL' ? 'Tüzel Kurum' : 'Kurum') }}</span>
             <p class="preview-location" *ngIf="form.location">📍 {{ form.location }}</p>
             <p class="preview-phone" *ngIf="form.phone">📞 {{ form.phone }}</p>
             <p class="preview-website" *ngIf="form.website">🌐 {{ form.website }}</p>

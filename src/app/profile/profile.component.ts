@@ -12,9 +12,6 @@ import { ThemeService } from '../services/theme.service';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="profile-page">
-      <!-- Navbar -->
-      
-
       <div class="page-body">
 
         <!-- Sol: Profil Önizleme Kartı -->
@@ -22,7 +19,7 @@ import { ThemeService } from '../services/theme.service';
           <div class="preview-card">
             <div class="avatar-circle">{{ getInitials() }}</div>
             <h2>{{ form.fullName || user?.fullName }}</h2>
-            <span class="role-badge">Şehir Plancısı</span>
+            <span class="role-badge">Şehir Plancısı <span *ngIf="user?.karne">({{ user?.karne }} Grubu Karne)</span></span>
             <p class="preview-location" *ngIf="form.location">
               📍 {{ form.location }}
             </p>
@@ -112,14 +109,6 @@ Projelerinizi madde madde açıklayabilirsiniz."></textarea>
     /* Layout */
     .profile-page { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; }
 
-    /* Navbar */
-    .navbar { background: var(--bg-navbar); color: white; padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 100; }
-    .nav-content { display: flex; align-items: center; gap: 1rem; max-width: 1200px; margin: 0 auto; }
-    .back-btn { background: transparent; border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 0.4rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-    .back-btn:hover { background: rgba(255,255,255,0.1); }
-    .page-title { font-size: 1rem; font-weight: 600; flex: 1; text-align: center; }
-    .user-chip { background: #2d3748; padding: 0.35rem 0.9rem; border-radius: 20px; font-size: 0.8rem; white-space: nowrap; color: white; }
-
     /* Page body */
     .page-body { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
 
@@ -169,8 +158,6 @@ Projelerinizi madde madde açıklayabilirsiniz."></textarea>
       .form-row { grid-template-columns: 1fr; }
       .save-bar { justify-content: stretch; }
       .btn { width: 100%; }
-      .nav-content { flex-wrap: wrap; }
-      .page-title { order: -1; width: 100%; text-align: left; }
     }
   `]
 })
