@@ -56,12 +56,24 @@ import { ThemeService } from '../services/theme.service';
             <button class="toggle-btn" [class.active]="selectedRole === 'ENTITY'" (click)="setRole('ENTITY')">Kurum / Tüzel Kişiler İçin</button>
           </div>
         </div>
+        
+        <div class="billing-toggle-container">
+          <span [class.active]="billingCycle === 'MONTHLY'">Aylık</span>
+          <label class="switch">
+            <input type="checkbox" [checked]="billingCycle === 'YEARLY'" (change)="toggleBilling()">
+            <span class="slider round"></span>
+          </label>
+          <span [class.active]="billingCycle === 'YEARLY'">Yıllık <span class="discount-badge">%20 İndirim</span></span>
+        </div>
 
         <!-- Plancı Planları -->
         <div class="pricing-cards" *ngIf="selectedRole === 'PLANNER'">
           <div class="pricing-card">
             <h3>Pro Plancı</h3>
-            <div class="price">₺499<span>/ay</span></div>
+            <div class="price">
+              {{ billingCycle === 'MONTHLY' ? '₺499' : '₺5.000' }}
+              <span>{{ billingCycle === 'MONTHLY' ? '/ay' : '/yıl' }}</span>
+            </div>
             <ul class="features">
               <li><i>✓</i> Sınırsız Teklif Verme</li>
               <li><i>✓</i> Kurum/Tüzel İsimlerini Görme</li>
@@ -73,7 +85,10 @@ import { ThemeService } from '../services/theme.service';
           <div class="pricing-card popular">
             <div class="popular-badge">EN ÇOK TERCİH EDİLEN</div>
             <h3>Premium Plancı</h3>
-            <div class="price">₺999<span>/ay</span></div>
+            <div class="price">
+              {{ billingCycle === 'MONTHLY' ? '₺999' : '₺12.000' }}
+              <span>{{ billingCycle === 'MONTHLY' ? '/ay' : '/yıl' }}</span>
+            </div>
             <ul class="features">
               <li><i>✓</i> Sınırsız Teklif Verme</li>
               <li><i>✓</i> Kurum İsimlerini Görme</li>
@@ -88,7 +103,7 @@ import { ThemeService } from '../services/theme.service';
         <div class="pricing-cards" *ngIf="selectedRole === 'ENTITY'">
           <div class="pricing-card">
             <h3>Ücretsiz Kurum</h3>
-            <div class="price">₺0<span>/ay</span></div>
+            <div class="price">₺0<span>{{ billingCycle === 'MONTHLY' ? '/ay' : '/yıl' }}</span></div>
             <ul class="features">
               <li><i>✓</i> En fazla 2 İş / İlan Oluşturma</li>
               <li><i>✓</i> Plancı Tekliflerini İnceleme</li>
@@ -100,7 +115,10 @@ import { ThemeService } from '../services/theme.service';
           <div class="pricing-card popular">
             <div class="popular-badge">KURUMSALLAR İÇİN</div>
             <h3>Pro Kurum / Tüzel</h3>
-            <div class="price">₺1,499<span>/ay</span></div>
+            <div class="price">
+              {{ billingCycle === 'MONTHLY' ? '₺1.499' : '₺10.000' }}
+              <span>{{ billingCycle === 'MONTHLY' ? '/ay' : '/yıl' }}</span>
+            </div>
             <ul class="features">
               <li><i>✓</i> <strong>Sınırsız İlan (İş) Oluşturma</strong></li>
               <li><i>✓</i> Sınırsız Teklif Alma</li>
@@ -176,6 +194,16 @@ import { ThemeService } from '../services/theme.service';
     .toggle-btn { background: transparent; border: none; padding: 0.8rem 2rem; border-radius: 26px; font-weight: 600; cursor: pointer; color: var(--text-secondary); transition: all 0.3s; font-size: 1rem; }
     .toggle-btn.active { background: var(--primary-color); color: white; box-shadow: 0 4px 6px rgba(107, 70, 193, 0.2); }
     
+    .billing-toggle-container { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 3rem; font-weight: 600; color: var(--text-secondary); }
+    .billing-toggle-container span.active { color: var(--text-primary); }
+    .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    input:checked + .slider { background-color: var(--primary-color); }
+    input:checked + .slider:before { transform: translateX(26px); }
+    .discount-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; margin-left: 0.5rem; vertical-align: middle; }
+
     /* Mobile Responsiveness */
     @media (max-width: 768px) {
       .navbar { flex-direction: column; padding: 1rem; gap: 1rem; }
@@ -193,10 +221,15 @@ import { ThemeService } from '../services/theme.service';
 })
 export class HomeComponent {
   selectedRole: 'PLANNER' | 'ENTITY' = 'PLANNER';
+  billingCycle: 'MONTHLY' | 'YEARLY' = 'MONTHLY';
 
   constructor(public themeService: ThemeService) {}
 
   setRole(role: 'PLANNER' | 'ENTITY') {
     this.selectedRole = role;
+  }
+
+  toggleBilling() {
+    this.billingCycle = this.billingCycle === 'MONTHLY' ? 'YEARLY' : 'MONTHLY';
   }
 }
