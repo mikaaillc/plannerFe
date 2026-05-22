@@ -49,31 +49,65 @@ import { ThemeService } from '../services/theme.service';
       <section id="pricing" class="pricing">
         <h2>Üyelik Planları</h2>
         <p class="pricing-subtitle">İhtiyacınıza en uygun planı seçin ve hemen teklifleşmeye başlayın.</p>
-        <div class="pricing-cards">
+        
+        <div class="role-toggle-container">
+          <div class="role-toggle">
+            <button class="toggle-btn" [class.active]="selectedRole === 'PLANNER'" (click)="setRole('PLANNER')">Şehir Plancıları İçin</button>
+            <button class="toggle-btn" [class.active]="selectedRole === 'ENTITY'" (click)="setRole('ENTITY')">Kurum / Tüzel Kişiler İçin</button>
+          </div>
+        </div>
+
+        <!-- Plancı Planları -->
+        <div class="pricing-cards" *ngIf="selectedRole === 'PLANNER'">
           <div class="pricing-card">
-            <h3>Aylık Plan</h3>
+            <h3>Pro Plancı</h3>
             <div class="price">₺499<span>/ay</span></div>
             <ul class="features">
               <li><i>✓</i> Sınırsız Teklif Verme</li>
-              <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
-              <li><i>✓</i> Öncelikli Destek</li>
-              <li><i>✓</i> Gemini AI Asistanı</li>
+              <li><i>✓</i> Kurum/Tüzel İsimlerini Görme</li>
+              <li><i>✓</i> Standart Destek</li>
             </ul>
             <button class="btn btn-primary" style="width: 100%" routerLink="/register">Hemen Abone Ol</button>
           </div>
 
           <div class="pricing-card popular">
             <div class="popular-badge">EN ÇOK TERCİH EDİLEN</div>
-            <h3>Yıllık Plan</h3>
-            <div class="price">₺4,990<span>/yıl</span></div>
+            <h3>Premium Plancı</h3>
+            <div class="price">₺999<span>/ay</span></div>
             <ul class="features">
-              <li><i>✓</i> Aylık plana göre 2 ay bedava</li>
               <li><i>✓</i> Sınırsız Teklif Verme</li>
-              <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
+              <li><i>✓</i> Kurum İsimlerini Görme</li>
+              <li><i>✓</i> <strong>Partner Bulma Özelliği (Üst Karne)</strong></li>
               <li><i>✓</i> Premium Profil Rozeti</li>
-              <li><i>✓</i> Gemini AI Asistanı</li>
             </ul>
-            <button class="btn btn-primary" style="width: 100%" routerLink="/register">Yıllık Abone Ol</button>
+            <button class="btn btn-primary" style="width: 100%" routerLink="/register">Premium Abone Ol</button>
+          </div>
+        </div>
+
+        <!-- Kurum Planları -->
+        <div class="pricing-cards" *ngIf="selectedRole === 'ENTITY'">
+          <div class="pricing-card">
+            <h3>Ücretsiz Kurum</h3>
+            <div class="price">₺0<span>/ay</span></div>
+            <ul class="features">
+              <li><i>✓</i> En fazla 2 İş / İlan Oluşturma</li>
+              <li><i>✓</i> Plancı Tekliflerini İnceleme</li>
+              <li><i>✓</i> Temel Profil Görünümü</li>
+            </ul>
+            <button class="btn btn-outline" style="width: 100%" routerLink="/register">Ücretsiz Başla</button>
+          </div>
+
+          <div class="pricing-card popular">
+            <div class="popular-badge">KURUMSALLAR İÇİN</div>
+            <h3>Pro Kurum / Tüzel</h3>
+            <div class="price">₺1,499<span>/ay</span></div>
+            <ul class="features">
+              <li><i>✓</i> <strong>Sınırsız İlan (İş) Oluşturma</strong></li>
+              <li><i>✓</i> Sınırsız Teklif Alma</li>
+              <li><i>✓</i> Öncelikli İlan Gösterimi</li>
+              <li><i>✓</i> Gelişmiş Kurum Profili</li>
+            </ul>
+            <button class="btn btn-primary" style="width: 100%" routerLink="/register">Pro Abone Ol</button>
           </div>
         </div>
       </section>
@@ -136,6 +170,11 @@ import { ThemeService } from '../services/theme.service';
     .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
     
     footer { text-align: center; padding: 2rem; background: var(--bg-navbar); color: #a0aec0; }
+
+    .role-toggle-container { display: flex; justify-content: center; margin-bottom: 3rem; }
+    .role-toggle { display: inline-flex; background: var(--card-bg); border-radius: 30px; padding: 4px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .toggle-btn { background: transparent; border: none; padding: 0.8rem 2rem; border-radius: 26px; font-weight: 600; cursor: pointer; color: var(--text-secondary); transition: all 0.3s; font-size: 1rem; }
+    .toggle-btn.active { background: var(--primary-color); color: white; box-shadow: 0 4px 6px rgba(107, 70, 193, 0.2); }
     
     /* Mobile Responsiveness */
     @media (max-width: 768px) {
@@ -153,5 +192,11 @@ import { ThemeService } from '../services/theme.service';
   `]
 })
 export class HomeComponent {
+  selectedRole: 'PLANNER' | 'ENTITY' = 'PLANNER';
+
   constructor(public themeService: ThemeService) {}
+
+  setRole(role: 'PLANNER' | 'ENTITY') {
+    this.selectedRole = role;
+  }
 }
