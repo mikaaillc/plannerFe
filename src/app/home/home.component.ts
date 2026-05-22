@@ -135,7 +135,8 @@ import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.componen
       </section>
       
       <footer>
-        <p>&copy; 2026 CityPlanner. Tüm hakları saklıdır.</p>
+        <img src="assets/images/cityplanner_logo.png" alt="Şehir Plancı Platformu Logo" style="height: 40px; margin-bottom: 10px; display: block; margin: 0 auto 10px auto;">
+        <p>&copy; 2026 Şehir Plancı Platformu. Tüm hakları saklıdır.</p>
       </footer>
     </div>
   `,
