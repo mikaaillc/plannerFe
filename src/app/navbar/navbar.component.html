@@ -20,9 +20,12 @@
   </div>
 
   <!-- Logged In Links -->
-  <div class="nav-links" *ngIf="user">
+    <div class="nav-links" *ngIf="user">
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ADMIN'" (click)="router.navigate(['/admin'])">⚙️ Yönetim Paneli</button>
+    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/available-jobs'])">📋 Açık İşler</button>
+    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/accepted-jobs'])">✅ Kabul Edilen Planlarım</button>
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/profile'])">✏️ Profilim</button>
+    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-jobs'])">🏢 İşlerim</button>
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile'])">✏️ Profilim</button>
     <button class="btn btn-outline" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/subscribe'])">⭐ Abonelik</button>
     <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Plancı' : user.role === 'ROLE_ADMIN' ? 'Admin' : 'Kurum'}})</small></span>

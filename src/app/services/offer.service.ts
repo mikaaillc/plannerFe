@@ -3,15 +3,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './auth.service';
+import { Job } from './job.service';
 
 export interface Offer {
   id: number;
   title: string;
   description: string;
   proposedPrice: number;
+  partnerKarnes?: string;
   status: string;
   sender: User;
-  receiver: User;
+  job: Job;
   createdAt: string;
 }
 
@@ -30,20 +32,24 @@ export class OfferService {
 
   constructor(private http: HttpClient) {}
 
-  getUserOffers(userId: number): Observable<Offer[]> {
-    return this.http.get<Offer[]>(`${this.apiUrl}/user/${userId}`);
+  getJobOffers(jobId: number): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${this.apiUrl}/job/${jobId}`);
+  }
+
+  getAcceptedOffers(plannerId: number): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${this.apiUrl}/my-accepted-offers/${plannerId}`);
   }
 
   getOffer(id: number): Observable<Offer> {
     return this.http.get<Offer>(`${this.apiUrl}/${id}`);
   }
 
-  createOffer(data: any): Observable<Offer> {
-    return this.http.post<Offer>(this.apiUrl, data);
+  createOffer(jobId: number, data: any): Observable<Offer> {
+    return this.http.post<Offer>(`${this.apiUrl}/job/${jobId}`, data);
   }
 
-  updateStatus(id: number, status: string, proposedPrice?: number): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/${id}/status`, { status, proposedPrice });
+  acceptOffer(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/accept`, {});
   }
 
   getComments(offerId: number): Observable<Comment[]> {

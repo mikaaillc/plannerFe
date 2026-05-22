@@ -20,7 +20,12 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'entity-profile', component: EntityProfileEditComponent },
   { path: 'entity/:id', component: EntityProfileViewComponent },
-  { path: 'offer/:id', component: OfferDetailComponent },
+  { path: 'job-create', loadComponent: () => import('./job-create/job-create.component').then(m => m.JobCreateComponent) },
+  { path: 'entity-jobs', loadComponent: () => import('./entity-jobs/entity-jobs.component').then(m => m.EntityJobsComponent) },
+  { path: 'job-offers/:id', loadComponent: () => import('./job-offers/job-offers.component').then(m => m.JobOffersComponent) },
+  { path: 'available-jobs', loadComponent: () => import('./planner-available-jobs/planner-available-jobs.component').then(m => m.PlannerAvailableJobsComponent) },
+  { path: 'accepted-jobs', loadComponent: () => import('./planner-accepted-jobs/planner-accepted-jobs.component').then(m => m.PlannerAcceptedJobsComponent) },
+  { path: 'offer-detail/:id', component: OfferDetailComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'subscribe', component: SubscriptionComponent },
   { path: '**', redirectTo: '' }

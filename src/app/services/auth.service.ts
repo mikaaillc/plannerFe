@@ -9,6 +9,8 @@ export interface User {
   username: string;
   fullName: string;
   role: string;
+  entityType?: string;
+  karne?: string;
   isPaid?: boolean;
   subscriptionType?: string;
 }

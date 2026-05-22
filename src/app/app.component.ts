@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,45 @@ import { NavbarComponent } from './navbar/navbar.component';
   `,
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'frontend';
+  private idleTimeout: any;
+  private readonly IDLE_TIME = 5 * 60 * 1000; // 5 minutes
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.resetIdleTimeout();
+      } else {
+        this.clearIdleTimeout();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.clearIdleTimeout();
+  }
+
+  @HostListener('window:mousemove')
+  @HostListener('window:keydown')
+  @HostListener('window:click')
+  @HostListener('window:scroll')
+  resetIdleTimeout() {
+    if (this.authService.getCurrentUser()) {
+      this.clearIdleTimeout();
+      this.idleTimeout = setTimeout(() => {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      }, this.IDLE_TIME);
+    }
+  }
+
+  private clearIdleTimeout() {
+    if (this.idleTimeout) {
+      clearTimeout(this.idleTimeout);
+      this.idleTimeout = null;
+    }
+  }
 }

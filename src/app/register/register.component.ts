@@ -14,7 +14,6 @@ import { API_URL } from '../config';
   template: `
     <div class="register-container">
       
-
       <div class="register-card">
         <h2 (click)="router.navigate(['/'])" style="cursor:pointer; text-align:center; color:#4299e1;">&larr; CityPlanner</h2>
         <h3>Hesap Oluştur</h3>
@@ -25,6 +24,26 @@ import { API_URL } from '../config';
           <select [(ngModel)]="user.role" class="form-control">
             <option value="ROLE_PLANNER">Şehir Plancısı</option>
             <option value="ROLE_ENTITY">Kurum / Tüzel Kişi</option>
+          </select>
+        </div>
+
+        <div class="form-group" *ngIf="user.role === 'ROLE_ENTITY'">
+          <label>Kurum Tipi</label>
+          <div style="display: flex; gap: 1rem;">
+            <label><input type="radio" [(ngModel)]="user.entityType" value="KAMU" name="entityType"> Kamu Kurumu</label>
+            <label><input type="radio" [(ngModel)]="user.entityType" value="TUZEL" name="entityType"> Tüzel Kişi</label>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="user.role === 'ROLE_PLANNER'">
+          <label>Karne Grubu</label>
+          <select [(ngModel)]="user.karne" class="form-control">
+            <option value="A">A Grubu</option>
+            <option value="B">B Grubu</option>
+            <option value="C">C Grubu</option>
+            <option value="D">D Grubu</option>
+            <option value="E">E Grubu</option>
+            <option value="F">F Grubu</option>
           </select>
         </div>
 
@@ -88,12 +107,13 @@ export class RegisterComponent {
     password: '',
     fullName: '',
     role: 'ROLE_PLANNER',
+    entityType: 'TUZEL',
+    karne: 'A',
     completedWorks: ''
   };
   error = '';
   isLoading = false;
 
-  // Render Backend URL
   private apiUrl = API_URL + '/auth/register';
 
   constructor(
@@ -106,6 +126,13 @@ export class RegisterComponent {
     if (!this.user.username || !this.user.password || !this.user.fullName) {
       this.error = 'Lütfen zorunlu alanları doldurun.';
       return;
+    }
+    
+    if (this.user.role === 'ROLE_PLANNER') {
+      this.user.entityType = '';
+    } else {
+      this.user.karne = '';
+      this.user.completedWorks = '';
     }
 
     this.isLoading = true;

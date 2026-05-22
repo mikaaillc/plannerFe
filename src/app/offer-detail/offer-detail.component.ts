@@ -12,61 +12,51 @@ import { ThemeService } from '../services/theme.service';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="dashboard">
-      
-
       <div class="content" *ngIf="offer">
         <div class="main-card">
           <div class="header-section">
             <div>
-              <h2>{{offer.title}}</h2>
+              <h2>Teklif: {{offer.title}}</h2>
               <div class="meta">
                 <span class="status" [ngClass]="offer.status.toLowerCase()">{{offer.status}}</span>
                 <span class="date">{{offer.createdAt | date:'dd.MM.yyyy HH:mm'}}</span>
               </div>
             </div>
             <div class="price-box">
-              <div class="label">Önerilen Ücret</div>
+              <div class="label">Teklif Edilen Ücret</div>
               <div class="amount">{{offer.proposedPrice}} ₺</div>
             </div>
           </div>
           
           <div class="participants">
             <div class="participant">
-              <strong>Gönderen (Kurum):</strong>
-              <span *ngIf="user?.role === 'ROLE_PLANNER'" class="entity-link" (click)="router.navigate(['/entity', offer.sender.id])">
-                🏢 {{offer.sender.fullName}} <small>→ Profili Gör</small>
+              <strong>İşi Veren (Kurum):</strong>
+              <span class="entity-link" (click)="router.navigate(['/entity', offer.job.creator.id])">
+                🏢 {{offer.job.creator.fullName}} <small>→ Profili Gör</small>
               </span>
-              <span *ngIf="user?.role !== 'ROLE_PLANNER'">{{offer.sender.fullName}}</span>
             </div>
             <div class="participant">
-              <strong>Alıcı (Şehir Plancısı):</strong> {{offer.receiver.fullName}}
+              <strong>İşe Talip (Plancı):</strong> 
+              <span class="entity-link" (click)="router.navigate(['/planners', offer.sender.id])">
+                ✏️ {{offer.sender.fullName}} <small>→ Profili Gör</small>
+              </span>
             </div>
           </div>
 
           <div class="description-box">
-            <h3>İş Detayı / Açıklama</h3>
+            <h3>İş Bilgisi</h3>
+            <p><strong>{{offer.job.title}}</strong></p>
+            <p>{{offer.job.description}}</p>
+          </div>
+
+          <div class="description-box" style="margin-top: 1rem;">
+            <h3>Teklif Açıklaması</h3>
             <p>{{offer.description}}</p>
+            <p *ngIf="offer.partnerKarnes"><strong>Partner Karneleri:</strong> {{offer.partnerKarnes}}</p>
           </div>
 
-          <div class="actions" *ngIf="offer.status === 'PENDING' || offer.status === 'NEGOTIATING'">
-            <ng-container *ngIf="user?.role === 'ROLE_PLANNER'">
-              <button class="btn btn-success" (click)="updateStatus('ACCEPTED')">Kabul Et</button>
-              <button class="btn btn-danger" (click)="updateStatus('REJECTED')">Reddet</button>
-              <button class="btn btn-warning" (click)="showNegotiate = !showNegotiate">Fiyat Öner / Müzakere Et</button>
-            </ng-container>
-            
-            <ng-container *ngIf="user?.role === 'ROLE_ENTITY' && offer.status === 'NEGOTIATING'">
-              <button class="btn btn-success" (click)="updateStatus('ACCEPTED')">Yeni Fiyatı Kabul Et</button>
-              <button class="btn btn-danger" (click)="updateStatus('REJECTED')">Reddet</button>
-            </ng-container>
-          </div>
-
-          <div class="negotiate-box" *ngIf="showNegotiate">
-            <h4>Yeni Fiyat Önerisi</h4>
-            <div class="form-group flex-group">
-              <input type="number" [(ngModel)]="newPrice" class="form-control" placeholder="Yeni fiyat (TL)" />
-              <button class="btn btn-primary" (click)="negotiatePrice()">Öneriyi Gönder</button>
-            </div>
+          <div class="actions" *ngIf="offer.status === 'PENDING' && user?.role === 'ROLE_ENTITY' && offer.job.status === 'OPEN'">
+              <button class="btn btn-success" (click)="acceptOffer()">Kabul Et</button>
           </div>
         </div>
 
@@ -96,12 +86,6 @@ import { ThemeService } from '../services/theme.service';
   `,
   styles: [`
     .dashboard { min-height: 100vh; background: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; padding-bottom: 2rem; }
-    .navbar { background: var(--bg-navbar); color: white; padding: 1rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .nav-content { max-width: 1000px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-    .navbar h1 { margin: 0; font-size: 1.25rem; font-weight: 600; display: inline-block; }
-    .user-info { display: flex; align-items: center; gap: 1rem; }
-    .user-badge { background: #2d3748; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: white; }
-    .user-badge small { color: #a0aec0; }
     .content { max-width: 1000px; margin: 2rem auto; padding: 0 2rem; display: flex; flex-direction: column; gap: 2rem; }
     
     .main-card, .comments-section { background: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
@@ -116,7 +100,7 @@ import { ThemeService } from '../services/theme.service';
     .price-box .amount { font-size: 1.5rem; font-weight: 700; color: var(--text-success); }
     
     .participants { display: flex; gap: 2rem; margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; flex-wrap: wrap; }
-    .participant { font-size: 0.95rem; color: var(--text-secondary); }
+    .participant { font-size: 0.95rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.5rem; }
     .entity-link { color: var(--primary-color); cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.2s; }
     .entity-link:hover { color: var(--primary-hover); text-decoration: underline; }
     .entity-link small { font-size: 0.78rem; color: var(--text-muted); }
@@ -130,15 +114,6 @@ import { ThemeService } from '../services/theme.service';
     .btn-primary:hover { background: var(--primary-hover); }
     .btn-success { background: #48bb78; color: white; }
     .btn-success:hover { background: #38a169; }
-    .btn-danger { background: #f56565; color: white; }
-    .btn-danger:hover { background: #e53e3e; }
-    .btn-warning { background: #ecc94b; color: #744210; }
-    .btn-warning:hover { background: #d69e2e; }
-    
-    .negotiate-box { margin-top: 1.5rem; padding: 1.5rem; background: var(--bg-info-light); border-radius: 8px; border: 1px solid var(--border-info); }
-    .negotiate-box h4 { margin-top: 0; color: var(--text-info); }
-    .flex-group { display: flex; gap: 1rem; }
-    .flex-group .form-control { flex: 1; }
     
     .form-control { background: var(--input-bg); color: var(--text-primary); padding: 0.75rem; border: 1px solid var(--input-border); border-radius: 6px; font-family: inherit; font-size: 0.95rem; }
     .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2); }
@@ -147,7 +122,6 @@ import { ThemeService } from '../services/theme.service';
     .status.pending { background: #fefcbf; color: #b7791f; }
     .status.accepted { background: #c6f6d5; color: #22543d; }
     .status.rejected { background: #fed7d7; color: #822727; }
-    .status.negotiating { background: #bee3f8; color: #2a4365; }
     
     .comments-section h3 { margin-top: 0; color: var(--text-primary); margin-bottom: 1.5rem; }
     .comments-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; max-height: 400px; overflow-y: auto; padding-right: 0.5rem; }
@@ -158,17 +132,6 @@ import { ThemeService } from '../services/theme.service';
     .no-comments { text-align: center; color: var(--text-muted); padding: 2rem 0; }
     
     .new-comment { display: flex; flex-direction: column; gap: 1rem; }
-    .btn-secondary { background: var(--border-color); color: var(--text-secondary); }
-    .btn-secondary:hover { background: var(--input-border); }
-    
-    @media (max-width: 768px) {
-      .nav-content { flex-direction: column; gap: 1rem; text-align: center; }
-      .header-section { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .actions { width: 100%; flex-direction: column; }
-      .actions .btn { width: 100%; }
-      .message-input { flex-direction: column; }
-      .message-input .btn { width: 100%; }
-    }
   `]
 })
 export class OfferDetailComponent implements OnInit {
@@ -177,8 +140,6 @@ export class OfferDetailComponent implements OnInit {
   comments: Comment[] = [];
   
   newCommentText = '';
-  showNegotiate = false;
-  newPrice: number | null = null;
 
   constructor(
     private authService: AuthService,
@@ -216,18 +177,10 @@ export class OfferDetailComponent implements OnInit {
     });
   }
 
-  updateStatus(status: string) {
+  acceptOffer() {
     if (this.offer) {
-      this.offerService.updateStatus(this.offer.id, status).subscribe(() => {
-        this.loadOffer(this.offer!.id);
-      });
-    }
-  }
-
-  negotiatePrice() {
-    if (this.offer && this.newPrice) {
-      this.offerService.updateStatus(this.offer.id, 'NEGOTIATING', this.newPrice).subscribe(() => {
-        this.showNegotiate = false;
+      this.offerService.acceptOffer(this.offer.id).subscribe(() => {
+        alert('Teklif başarıyla kabul edildi!');
         this.loadOffer(this.offer!.id);
       });
     }
