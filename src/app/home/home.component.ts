@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
+import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, AiTooltipComponent],
   template: `
     <div class="home-container">
       
@@ -77,6 +78,7 @@ import { ThemeService } from '../services/theme.service';
             <ul class="features">
               <li><i>✓</i> Sınırsız Teklif Verme</li>
               <li><i>✓</i> Kurum/Tüzel İsimlerini Görme</li>
+              <li><i>✓</i> <app-ai-tooltip></app-ai-tooltip></li>
               <li><i>✓</i> Standart Destek</li>
             </ul>
             <button class="btn btn-primary" style="width: 100%" routerLink="/register">Hemen Abone Ol</button>
@@ -93,6 +95,7 @@ import { ThemeService } from '../services/theme.service';
               <li><i>✓</i> Sınırsız Teklif Verme</li>
               <li><i>✓</i> Kurum İsimlerini Görme</li>
               <li><i>✓</i> <strong>Partner Bulma Özelliği (Üst Karne)</strong></li>
+              <li><i>✓</i> <app-ai-tooltip></app-ai-tooltip></li>
               <li><i>✓</i> Premium Profil Rozeti</li>
             </ul>
             <button class="btn btn-primary" style="width: 100%" routerLink="/register">Premium Abone Ol</button>
@@ -123,6 +126,7 @@ import { ThemeService } from '../services/theme.service';
               <li><i>✓</i> <strong>Sınırsız İlan (İş) Oluşturma</strong></li>
               <li><i>✓</i> Sınırsız Teklif Alma</li>
               <li><i>✓</i> Öncelikli İlan Gösterimi</li>
+              <li><i>✓</i> <app-ai-tooltip></app-ai-tooltip></li>
               <li><i>✓</i> Gelişmiş Kurum Profili</li>
             </ul>
             <button class="btn btn-primary" style="width: 100%" routerLink="/register">Pro Abone Ol</button>

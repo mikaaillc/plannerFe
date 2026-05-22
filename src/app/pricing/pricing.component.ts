@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService, User } from '../services/auth.service';
 import { SubscriptionService } from '../services/subscription.service';
+import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.component';
 
 @Component({
   selector: 'app-pricing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AiTooltipComponent],
   template: `
     <div class="pricing-container">
       <div class="header">
@@ -35,6 +36,7 @@ import { SubscriptionService } from '../services/subscription.service';
           <ul class="features">
             <li><strong>Sınırsız</strong> iş oluşturma</li>
             <li>Gelişmiş teklif filtreleme</li>
+            <li><app-ai-tooltip></app-ai-tooltip></li>
             <li>Öncelikli destek</li>
           </ul>
           <button class="btn btn-primary" [disabled]="currentUser?.subscriptionType === 'PRO_ENTITY'" (click)="upgrade('PRO_ENTITY')">
@@ -64,6 +66,7 @@ import { SubscriptionService } from '../services/subscription.service';
           <ul class="features">
             <li>Kurum adlarını açıkça görme</li>
             <li><strong>Sınırsız</strong> teklif verme</li>
+            <li><app-ai-tooltip></app-ai-tooltip></li>
             <li class="disabled">Partner bulma (Yok)</li>
           </ul>
           <button class="btn btn-primary" [disabled]="currentUser?.subscriptionType === 'PRO_PLANNER'" (click)="upgrade('PRO_PLANNER')">
@@ -78,6 +81,7 @@ import { SubscriptionService } from '../services/subscription.service';
             <li>Kurum adlarını açıkça görme</li>
             <li><strong>Sınırsız</strong> teklif verme</li>
             <li><strong>Partner Bulma Sistemi</strong></li>
+            <li><app-ai-tooltip></app-ai-tooltip></li>
             <li>Üst karneli plancılara mesaj atma</li>
           </ul>
           <button class="btn btn-primary" [disabled]="currentUser?.subscriptionType === 'PREMIUM_PLANNER'" (click)="upgrade('PREMIUM_PLANNER')">

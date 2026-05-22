@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
     <div [class.has-sidebar]="(authService.currentUser$ | async) !== null">
       <router-outlet></router-outlet>
     </div>
-    <app-chatbot></app-chatbot>
+    <app-chatbot *ngIf="hasPaidSubscription()"></app-chatbot>
   `,
   styleUrl: './app.component.css'
 })
@@ -37,6 +37,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.clearIdleTimeout();
+  }
+
+  hasPaidSubscription(): boolean {
+    const user = this.authService.getCurrentUser();
+    if (!user) return false;
+    const s = user.subscriptionType;
+    return s === 'PRO_PLANNER' || s === 'PREMIUM_PLANNER' || s === 'PRO_ENTITY';
   }
 
   @HostListener('window:mousemove')
