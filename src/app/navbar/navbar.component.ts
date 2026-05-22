@@ -13,6 +13,7 @@ import { ThemeService } from '../services/theme.service';
 })
 export class NavbarComponent implements OnInit {
   user: User | null = null;
+  isSidebarOpen = false;
 
   constructor(
     public themeService: ThemeService,
@@ -40,6 +41,15 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.closeSidebar();
     this.router.navigate(['/login']);
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
   }
 }

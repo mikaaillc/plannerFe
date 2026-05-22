@@ -42,7 +42,7 @@ import { API_URL } from '../config';
           <div class="preview-card mt-4">
             <h3 class="section-title">Üyelik Bilgilerim</h3>
             <div class="membership-info">
-              <p><strong>Paket:</strong> {{ user?.subscriptionType || 'Ücretsiz' }}</p>
+              <p><strong>Paket:</strong> {{ getSubscriptionName() }}</p>
               <p *ngIf="user?.isPaid"><strong>Geçerlilik:</strong> {{ user?.subscriptionExpiryDate | date:'dd.MM.yyyy' || 'Sınırsız' }}</p>
               
               <button class="btn btn-outline-primary mt-2" (click)="goToPricing()">Paketleri Görüntüle</button>
@@ -232,6 +232,19 @@ private apiUrl = API_URL + '/users';
   getInitials(): string {
     const name = this.form.fullName || this.user?.fullName || '';
     return name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2);
+  }
+
+  getSubscriptionName(): string {
+    const type = this.user?.subscriptionType;
+    if (!type) return 'Ücretsiz';
+    const names: any = {
+      'FREE_PLANNER': 'Ücretsiz Plancı',
+      'PRO_PLANNER': 'Pro Plancı',
+      'PREMIUM_PLANNER': 'Premium Plancı',
+      'FREE_ENTITY': 'Ücretsiz Kurum',
+      'PRO_ENTITY': 'Pro Kurum / Tüzel'
+    };
+    return names[type] || type;
   }
 
   getSkillList(): string[] {

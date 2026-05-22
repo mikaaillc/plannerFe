@@ -1,7 +1,15 @@
-<nav class="global-navbar">
-  <div class="logo" (click)="goHome()" style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
-    <img src="assets/images/logo.png" alt="CityPlanner Logo" class="logo-img">
-    <span class="brand-name">CityPlanner</span>
+<nav class="global-navbar" [class.logged-in]="user">
+  <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger-btn" *ngIf="user" (click)="toggleSidebar()">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+      </svg>
+    </button>
+    <div (click)="goHome()" style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+      <img src="assets/images/logo.png" alt="CityPlanner Logo" class="logo-img">
+      <span class="brand-name">CityPlanner</span>
+    </div>
   </div>
 
   <!-- Logged Out Links -->
@@ -19,17 +27,8 @@
     <button class="btn btn-primary" (click)="router.navigate(['/register'])">Kayıt Ol</button>
   </div>
 
-  <!-- Logged In Links -->
-    <div class="nav-links" *ngIf="user">
-    <button class="btn btn-outline" *ngIf="router.url !== '/dashboard'" (click)="router.navigate(['/dashboard'])" style="font-weight:bold; color:var(--primary-color); border-color:var(--primary-color);">🔙 Hızlı Menüye Dön</button>
-    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ADMIN'" (click)="router.navigate(['/admin'])">⚙️ Yönetim Paneli</button>
-    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/available-jobs'])">📋 Açık İşler</button>
-    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/accepted-jobs'])">✅ Kabul Edilen Planlarım</button>
-    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/profile'])">✏️ Profilim</button>
-    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-jobs'])">🏢 İşlerim</button>
-    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile'])">✏️ Profilim</button>
-    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER' && user.subscriptionType === 'PREMIUM_PLANNER'" (click)="router.navigate(['/partner-search'])">🤝 Partner Bul</button>
-    <button class="btn btn-outline" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/pricing'])">⭐ Paketler</button>
+  <!-- Logged In Top Bar Actions -->
+  <div class="nav-links" *ngIf="user">
     <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Plancı' : user.role === 'ROLE_ADMIN' ? 'Admin' : 'Kurum'}})</small></span>
     
     <label class="theme-switch">
@@ -43,3 +42,25 @@
     <button class="btn btn-logout" (click)="logout()">Çıkış</button>
   </div>
 </nav>
+
+<!-- Left Sidebar Overlay -->
+<div class="sidebar-overlay" *ngIf="user" [class.open]="isSidebarOpen" (click)="closeSidebar()"></div>
+
+<!-- Left Sidebar Menu -->
+<aside class="sidebar-menu" *ngIf="user" [class.open]="isSidebarOpen">
+  <div class="sidebar-header">
+    <h3>Menü</h3>
+    <button class="close-btn" (click)="closeSidebar()">×</button>
+  </div>
+  <div class="sidebar-links">
+    <button class="sidebar-link" *ngIf="router.url !== '/dashboard'" (click)="router.navigate(['/dashboard']); closeSidebar()">🔙 Hızlı Menüye Dön</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_ADMIN'" (click)="router.navigate(['/admin']); closeSidebar()">⚙️ Yönetim Paneli</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/available-jobs']); closeSidebar()">📋 Açık İşler</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/accepted-jobs']); closeSidebar()">✅ Kabul Edilen Planlarım</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/profile']); closeSidebar()">✏️ Profilim</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-jobs']); closeSidebar()">🏢 İşlerim</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile']); closeSidebar()">✏️ Profilim</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_PLANNER' && user.subscriptionType === 'PREMIUM_PLANNER'" (click)="router.navigate(['/partner-search']); closeSidebar()">🤝 Partner Bul</button>
+    <button class="sidebar-link" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/pricing']); closeSidebar()">⭐ Paketler</button>
+  </div>
+</aside>
