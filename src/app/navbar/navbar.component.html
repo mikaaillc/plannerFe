@@ -21,6 +21,7 @@
 
   <!-- Logged In Links -->
     <div class="nav-links" *ngIf="user">
+    <button class="btn btn-outline" *ngIf="router.url !== '/dashboard'" (click)="router.navigate(['/dashboard'])" style="font-weight:bold; color:var(--primary-color); border-color:var(--primary-color);">🔙 Hızlı Menüye Dön</button>
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ADMIN'" (click)="router.navigate(['/admin'])">⚙️ Yönetim Paneli</button>
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/available-jobs'])">📋 Açık İşler</button>
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/accepted-jobs'])">✅ Kabul Edilen Planlarım</button>

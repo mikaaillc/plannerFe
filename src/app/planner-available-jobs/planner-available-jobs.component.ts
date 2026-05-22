@@ -43,8 +43,10 @@ import { AuthService, User } from '../services/auth.service';
           <div *ngIf="job.detailedInfo" class="job-detailed-info">
             <strong>Detaylı Bilgi:</strong> {{ job.detailedInfo }}
           </div>
-          
-          <button class="btn btn-primary" (click)="openOfferModal(job)">Teklif Ver</button>
+          <div class="job-actions" style="display:flex; gap: 1rem;">
+            <button class="btn btn-outline" (click)="viewDetails(job.id)">Detayları Gör</button>
+            <button class="btn btn-primary" (click)="openOfferModal(job)">Teklif Ver</button>
+          </div>
         </div>
       </div>
 
@@ -181,6 +183,10 @@ export class PlannerAvailableJobsComponent implements OnInit {
       proposedPrice: null,
       partnerKarnes: []
     };
+  }
+
+  viewDetails(jobId: number) {
+    this.router.navigate(['/job-detail', jobId]);
   }
 
   closeOfferModal() {

@@ -25,6 +25,7 @@ export const routes: Routes = [
   { path: 'job-offers/:id', loadComponent: () => import('./job-offers/job-offers.component').then(m => m.JobOffersComponent) },
   { path: 'available-jobs', loadComponent: () => import('./planner-available-jobs/planner-available-jobs.component').then(m => m.PlannerAvailableJobsComponent) },
   { path: 'accepted-jobs', loadComponent: () => import('./planner-accepted-jobs/planner-accepted-jobs.component').then(m => m.PlannerAcceptedJobsComponent) },
+  { path: 'job-detail/:id', loadComponent: () => import('./job-detail/job-detail.component').then(m => m.JobDetailComponent) },
   { path: 'offer-detail/:id', component: OfferDetailComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'subscribe', component: SubscriptionComponent },

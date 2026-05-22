@@ -104,7 +104,6 @@ export class EntityJobsComponent implements OnInit {
   }
 
   viewDetails(jobId: number) {
-    // Optionally open a modal or navigate to a detail page
-    alert('Detay Sayfası Yapım Aşamasında (Projede istenilen kadarıyla teklifler ve iş listesi eklendi)');
+    this.router.navigate(['/job-detail', jobId]);
   }
 }
