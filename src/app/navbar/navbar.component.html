@@ -61,6 +61,7 @@
     <button class="sidebar-link" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-jobs']); closeSidebar()">🏢 İşlerim</button>
     <button class="sidebar-link" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile']); closeSidebar()">✏️ Profilim</button>
     <button class="sidebar-link" *ngIf="user.role === 'ROLE_PLANNER' && user.subscriptionType === 'PREMIUM_PLANNER'" (click)="router.navigate(['/partner-search']); closeSidebar()">🤝 Partner Bul</button>
+    <button class="sidebar-link" *ngIf="user.role === 'ROLE_PLANNER' && user.subscriptionType === 'PREMIUM_PLANNER'" (click)="router.navigate(['/partner-offers']); closeSidebar()">📬 Partner Teklifleri</button>
     <button class="sidebar-link" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/pricing']); closeSidebar()">⭐ Paketler</button>
   </div>
 </aside>

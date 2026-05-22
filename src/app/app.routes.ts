@@ -12,6 +12,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { PartnerSearchComponent } from './partner-search/partner-search.component';
+import { PartnerOffersComponent } from './partner-offers/partner-offers.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'accepted-jobs', loadComponent: () => import('./planner-accepted-jobs/planner-accepted-jobs.component').then(m => m.PlannerAcceptedJobsComponent) },
   { path: 'job-detail/:id', loadComponent: () => import('./job-detail/job-detail.component').then(m => m.JobDetailComponent) },
   { path: 'offer-detail/:id', component: OfferDetailComponent },
+  { path: 'partner-offers', component: PartnerOffersComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'subscribe', component: SubscriptionComponent },
   { path: '**', redirectTo: '' }

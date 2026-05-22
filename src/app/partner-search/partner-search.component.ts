@@ -4,11 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService, User } from '../services/auth.service';
 import { API_URL } from '../config';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { JobService, Job } from '../services/job.service';
+import { PartnerOfferService } from '../services/partner-offer.service';
 
 @Component({
   selector: 'app-partner-search',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   template: `
     <div class="partner-search-container">
       <div class="header">
@@ -38,6 +41,39 @@ import { Router } from '@angular/router';
         
         <div *ngIf="filteredPlanners.length === 0" class="no-data">
           Şu anda kriterlerinize uygun partner bulunamadı.
+        </div>
+      </div>
+
+      <!-- Contact Modal -->
+      <div class="modal-overlay" *ngIf="showModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>{{ selectedPlanner?.fullName }} - Partnerlik Teklifi Gönder</h3>
+            <button class="close-btn" (click)="closeModal()">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Hangi İş İçin?</label>
+              <select [(ngModel)]="offerPayload.jobId" class="form-control">
+                <option [ngValue]="null">Seçiniz...</option>
+                <option *ngFor="let job of availableJobs" [value]="job.id">
+                  {{ job.title }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Önerilen Ücret (TL)</label>
+              <input type="number" [(ngModel)]="offerPayload.proposedFee" class="form-control" placeholder="Örn: 50000">
+            </div>
+            <div class="form-group">
+              <label>Mesajınız</label>
+              <textarea [(ngModel)]="offerPayload.message" class="form-control" rows="4" placeholder="Partnerinizden beklentilerinizi ve proje detaylarını kısaca yazın..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closeModal()">İptal</button>
+            <button class="btn btn-primary" (click)="submitOffer()" [disabled]="!offerPayload.jobId || !offerPayload.proposedFee || !offerPayload.message">Gönder</button>
+          </div>
         </div>
       </div>
     </div>
@@ -74,17 +110,43 @@ import { Router } from '@angular/router';
     
     .error-msg { color: #e53e3e; text-align: center; font-size: 1.1rem; font-weight: bold; margin-top: 2rem; }
     .no-data { grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted); font-size: 1.1rem; }
+
+    /* Modal Styles */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-content { background: var(--card-bg); width: 100%; max-width: 500px; border-radius: 12px; padding: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .modal-header h3 { margin: 0; color: var(--text-primary); font-size: 1.25rem; }
+    .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-secondary); }
+    .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--input-bg); color: var(--text-primary); font-family: inherit; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem; }
+    .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); }
+    .btn-secondary:hover { background: var(--border-light); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
   `]
 })
 export class PartnerSearchComponent implements OnInit {
   currentUser: User | null = null;
   filteredPlanners: User[] = [];
+  availableJobs: Job[] = [];
   isLoading = true;
   error = '';
+
+  // Modal State
+  showModal = false;
+  selectedPlanner: User | null = null;
+  offerPayload = {
+    jobId: null as number | null,
+    proposedFee: null as number | null,
+    message: ''
+  };
 
   constructor(
     private authService: AuthService,
     private http: HttpClient,
+    private jobService: JobService,
+    private partnerOfferService: PartnerOfferService,
     private router: Router
   ) {}
 
@@ -102,6 +164,18 @@ export class PartnerSearchComponent implements OnInit {
     }
 
     this.fetchPartners();
+    this.fetchJobs();
+  }
+
+  fetchJobs() {
+    this.jobService.getAvailableJobs(this.currentUser?.id).subscribe({
+      next: (jobs) => {
+        this.availableJobs = jobs;
+      },
+      error: (err) => {
+        console.error("İşler yüklenirken hata oluştu:", err);
+      }
+    });
   }
 
   fetchPartners() {
@@ -125,6 +199,35 @@ export class PartnerSearchComponent implements OnInit {
   }
 
   contactPlanner(planner: User) {
-    alert(`Ortaklık isteği gönderildi: ${planner.fullName}\n\n(Bu işlem şimdilik simüle edilmektedir. Gerçek sistemde mesajlaşma veya e-posta gönderimi sağlanacaktır.)`);
+    this.selectedPlanner = planner;
+    this.offerPayload = { jobId: null, proposedFee: null, message: '' };
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.selectedPlanner = null;
+  }
+
+  submitOffer() {
+    if (!this.selectedPlanner || !this.currentUser) return;
+    
+    const payload = {
+      senderId: this.currentUser.id,
+      receiverId: this.selectedPlanner.id,
+      jobId: this.offerPayload.jobId,
+      proposedFee: this.offerPayload.proposedFee,
+      message: this.offerPayload.message
+    };
+
+    this.partnerOfferService.createOffer(payload).subscribe({
+      next: (res) => {
+        alert('Partnerlik teklifiniz başarıyla gönderildi!');
+        this.closeModal();
+      },
+      error: (err) => {
+        alert('Teklif gönderilirken bir hata oluştu: ' + (err.error || err.message));
+      }
+    });
   }
 }
