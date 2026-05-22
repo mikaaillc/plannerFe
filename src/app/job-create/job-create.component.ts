@@ -59,8 +59,8 @@ import { AuthService, User } from '../services/auth.service';
           <input type="text" [(ngModel)]="jobData.locationDetails" class="form-control" placeholder="Örn: İstanbul / Kartal / Uğur Mumcu" />
         </div>
 
-        <div class="form-group" *ngIf="isKamu()">
-          <label>Ada / Parsel ve Ek Bilgiler</label>
+        <div class="form-group">
+          <label>Ada / Parsel ve Ek Bilgiler <span *ngIf="isKamu()" style="color:red">*</span></label>
           <textarea [(ngModel)]="jobData.detailedInfo" class="form-control" rows="2" placeholder="Ada/Parsel veya diğer mülkiyet bilgileri"></textarea>
         </div>
 
@@ -189,6 +189,10 @@ export class JobCreateComponent implements OnInit {
     if (this.isKamu()) {
       if (!this.jobData.priceRangeMin || !this.jobData.priceRangeMax) {
         this.error = 'Kamu kurumları için fiyat aralığı girmek zorunludur.';
+        return;
+      }
+      if (!this.jobData.detailedInfo || this.jobData.detailedInfo.trim() === '') {
+        this.error = 'Kamu kurumları için Ada / Parsel bilgisi girmek zorunludur.';
         return;
       }
     }
