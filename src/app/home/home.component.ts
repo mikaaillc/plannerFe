@@ -167,7 +167,7 @@ import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.componen
     .hero-image { flex: 1; text-align: right; }
     .hero-image img { max-width: 100%; border-radius: 20px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
     
-    .about { padding: 6rem 4rem; background: var(--bg-primary); text-align: center; }
+    .about { padding: 6rem 4rem; background: var(--bg-primary); text-align: center; scroll-margin-top: 130px; }
     .about h2 { font-size: 2.5rem; margin-bottom: 3rem; color: var(--text-primary); }
     .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
     .about-card { padding: 2.5rem; background: var(--card-bg); border-radius: 16px; transition: transform 0.3s; border: 1px solid var(--border-color); }
@@ -176,7 +176,7 @@ import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.componen
     .about-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary); }
     .about-card p { color: var(--text-secondary); line-height: 1.6; }
 
-    .pricing { padding: 6rem 4rem; background: var(--bg-secondary); text-align: center; }
+    .pricing { padding: 6rem 4rem; background: var(--bg-secondary); text-align: center; scroll-margin-top: 130px; }
     .pricing h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-primary); }
     .pricing-subtitle { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 3rem; }
     .pricing-cards { display: flex; justify-content: center; gap: 2rem; max-width: 900px; margin: 0 auto; }
