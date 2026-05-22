@@ -73,6 +73,13 @@ import { AuthService, User } from '../services/auth.service';
     .btn { padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
     .btn-success { background: #48bb78; color: white; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); }
+
+    @media (max-width: 768px) {
+      .offers-container { padding: 1rem; }
+      .offer-header { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+      .offer-actions { flex-direction: column; width: 100%; }
+      .offer-actions .btn { width: 100%; }
+    }
   `]
 })
 export class JobOffersComponent implements OnInit {

@@ -88,9 +88,9 @@ import { API_URL } from '../config';
     .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); }
     .login-link a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
     
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       .register-container { padding: 1rem; }
-      .register-card { padding: 1.5rem; }
+      .register-card { width: 90%; padding: 1.5rem; }
     }
   `]
 })

@@ -43,9 +43,9 @@ import { ThemeService } from '../services/theme.service';
     .btn:active { transform: translateY(1px); }
     .error-msg { color: #e53e3e; margin-top: 1rem; text-align: center; font-size: 0.875rem; }
     
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       .login-container { padding: 1rem; }
-      .login-card { padding: 1.5rem; }
+      .login-card { width: 90%; padding: 1.5rem; }
     }
   `]
 })

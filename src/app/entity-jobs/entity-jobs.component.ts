@@ -62,6 +62,15 @@ import { AuthService, User } from '../services/auth.service';
     .btn-primary { background: var(--primary-color); color: white; }
     .btn-secondary { background: #4a5568; color: white; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); }
+
+    @media (max-width: 768px) {
+      .jobs-container { padding: 1rem; }
+      .header-section { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .job-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .job-meta { flex-direction: column; gap: 0.5rem; }
+      .job-actions { flex-direction: column; width: 100%; }
+      .job-actions .btn { width: 100%; }
+    }
   `]
 })
 export class EntityJobsComponent implements OnInit {

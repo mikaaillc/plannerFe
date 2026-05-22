@@ -150,8 +150,14 @@ import { Location } from '@angular/common';
     .loading { text-align: center; color: var(--text-secondary); padding: 2rem; }
     .error-msg { background: #fed7d7; color: #9b2c2c; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
 
-    @media (max-width: 600px) {
+    @media (max-width: 1024px) {
+      .page-container { padding: 1rem; }
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
       .card-header, .card-body, .card-footer { padding: 1.5rem; }
+      .info-grid { grid-template-columns: 1fr; }
       .specs-grid { grid-template-columns: 1fr; }
     }
   `]

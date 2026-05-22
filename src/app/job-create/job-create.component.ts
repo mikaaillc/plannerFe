@@ -135,7 +135,9 @@ import { AuthService, User } from '../services/auth.service';
     .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
     .error-msg { color: #e53e3e; margin-top: 1rem; text-align: center; font-weight: 500;}
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      .job-create-container { padding: 1rem; }
+      .card { padding: 1.5rem; }
       .checkbox-grid { grid-template-columns: 1fr; }
     }
   `]

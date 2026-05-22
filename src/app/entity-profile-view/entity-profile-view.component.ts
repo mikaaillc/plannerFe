@@ -109,12 +109,16 @@ import { ThemeService } from '../services/theme.service';
 
     .not-found { text-align: center; padding: 4rem; }
 
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+      .info-card.full-width { grid-column: 1; }
+      .profile-wrapper { padding: 0 1rem; }
+    }
+
     @media (max-width: 768px) {
       .hero-section { flex-direction: column; text-align: center; padding: 1.5rem; }
       .meta-row { justify-content: center; }
-      .content-grid { grid-template-columns: 1fr; }
-      .info-card.full-width { grid-column: 1; }
-      .profile-wrapper { padding: 0 1rem; margin: 1rem auto; }
+      .profile-wrapper { margin: 1rem auto; }
     }
   `]
 })

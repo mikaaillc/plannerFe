@@ -170,9 +170,13 @@ Projelerinizi madde madde açıklayabilirsiniz."></textarea>
     .success-msg { background: #c6f6d5; color: #276749; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; }
     .error-msg { background: #fed7d7; color: #9b2c2c; padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; }
 
+    @media (max-width: 1024px) {
+      .page-body { grid-template-columns: 250px 1fr; gap: 1rem; padding: 0 1rem; }
+    }
+
     /* Mobile */
     @media (max-width: 768px) {
-      .page-body { grid-template-columns: 1fr; padding: 0 1rem; margin: 1rem auto; }
+      .page-body { grid-template-columns: 1fr; margin: 1rem auto; }
       .preview-panel { position: static; }
       .form-row { grid-template-columns: 1fr; }
       .save-bar { justify-content: stretch; }

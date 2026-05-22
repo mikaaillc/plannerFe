@@ -97,6 +97,15 @@ import { Router } from '@angular/router';
     
     .no-data { text-align: center; padding: 3rem; color: var(--text-muted); font-size: 1.1rem; }
     .error-msg { color: #e53e3e; text-align: center; padding: 1rem; }
+
+    @media (max-width: 768px) {
+      .offers-container { padding: 1rem; }
+      .tabs { flex-wrap: wrap; }
+      .tab-btn { width: 100%; padding: 0.75rem 1rem; text-align: center; }
+      .offer-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .offer-footer { flex-direction: column; }
+      .offer-footer .btn { width: 100%; }
+    }
   `]
 })
 export class PartnerOffersComponent implements OnInit {

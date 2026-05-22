@@ -209,6 +209,17 @@ import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.componen
     input:checked + .slider:before { transform: translateX(26px); }
     .discount-badge { background: #10b981; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; margin-left: 0.5rem; vertical-align: middle; }
 
+    /* Tablet Responsiveness */
+    @media (max-width: 1024px) {
+      .hero { flex-direction: column; padding: 4rem 2rem; text-align: center; }
+      .hero-content { padding-right: 0; margin-bottom: 3rem; }
+      .hero-image { display: flex; justify-content: center; }
+      .hero-image img { max-width: 80%; }
+      .about-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+      .pricing-cards { flex-wrap: wrap; }
+      .pricing-card { max-width: 45%; }
+    }
+
     /* Mobile Responsiveness */
     @media (max-width: 768px) {
       .navbar { flex-direction: column; padding: 1rem; gap: 1rem; }
@@ -219,9 +230,11 @@ import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.componen
       .hero p { font-size: 1rem; }
       .hero-buttons { justify-content: center; flex-direction: column; width: 100%; }
       .hero-buttons .btn { width: 100%; }
+      .hero-image img { max-width: 100%; }
       .about { padding: 3rem 1rem; scroll-margin-top: 20px; }
       .pricing { padding: 3rem 1rem; scroll-margin-top: 20px; }
       .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .pricing-card { max-width: 100%; }
     }
   `]
 })
