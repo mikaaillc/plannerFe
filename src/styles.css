@@ -2,7 +2,7 @@
 :root {
   --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
-  --bg-navbar: #ffffff;
+  --bg-navbar: #e0f2fe;
   --text-primary: #1a202c;
   --text-secondary: #4a5568;
   --text-muted: #718096;
@@ -22,7 +22,7 @@
 :root.dark {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
-  --bg-navbar: #1e293b;
+  --bg-navbar: #27374D;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
@@ -50,6 +50,24 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('/assets/images/cityplanner_logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60vh;
+  opacity: 0.03;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+:root.dark body::after {
+  opacity: 0.02;
+  filter: invert(1);
 }
 
 /* Custom modern scrollbar */
