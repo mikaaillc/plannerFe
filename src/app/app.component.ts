@@ -3,14 +3,17 @@ import { RouterOutlet, Router } from '@angular/router';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from './services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ChatbotComponent, NavbarComponent],
+  imports: [RouterOutlet, ChatbotComponent, NavbarComponent, CommonModule],
   template: `
     <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
+    <div [class.has-sidebar]="(authService.currentUser$ | async) !== null">
+      <router-outlet></router-outlet>
+    </div>
     <app-chatbot></app-chatbot>
   `,
   styleUrl: './app.component.css'
@@ -20,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private idleTimeout: any;
   private readonly IDLE_TIME = 5 * 60 * 1000; // 5 minutes
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.authService.currentUser$.subscribe(user => {

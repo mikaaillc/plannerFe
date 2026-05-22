@@ -126,3 +126,10 @@ body {
   transform: translateX(1px);
 }
 
+@media (min-width: 769px) {
+  .has-sidebar {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+  }
+}

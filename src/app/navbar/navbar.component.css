@@ -65,18 +65,34 @@
 
 .sidebar-menu {
   position: fixed;
-  top: 0; left: -300px;
+  top: 83px;
+  left: -300px;
   width: 280px;
-  height: 100vh;
+  height: calc(100vh - 83px);
   background: var(--card-bg);
   box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  z-index: 10001;
+  z-index: 999;
   transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
 }
 .sidebar-menu.open {
   left: 0;
+}
+
+@media (min-width: 769px) {
+  .sidebar-menu {
+    left: 0 !important;
+  }
+  .hamburger-btn {
+    display: none !important;
+  }
+  .sidebar-overlay {
+    display: none !important;
+  }
+  .close-btn {
+    display: none !important;
+  }
 }
 
 .sidebar-header {
