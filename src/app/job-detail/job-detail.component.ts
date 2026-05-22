@@ -182,14 +182,10 @@ export class JobDetailComponent implements OnInit {
   }
 
   loadJobDetails(id: number) {
-    this.jobService.getAvailableJobs().subscribe({
-      next: (jobs) => {
-        // Geçici çözüm: normalde findById endpoint'i olur
-        // Burada listelenen işlerden ID eşleşmesini buluyoruz.
-        // İdealde API'de GET /api/jobs/:id olmalıdır.
-        const found = jobs.find((j: any) => j.id === id);
-        if (found) {
-          this.job = found;
+    this.jobService.getJob(id, this.currentUser?.id).subscribe({
+      next: (data) => {
+        if (data) {
+          this.job = data;
         } else {
           this.error = 'İş bulunamadı veya erişim yetkiniz yok.';
         }

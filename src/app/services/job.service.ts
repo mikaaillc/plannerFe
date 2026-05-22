@@ -30,7 +30,10 @@ export class JobService {
     return this.http.post<Job>(this.apiUrl, data);
   }
 
-  getAvailableJobs(): Observable<Job[]> {
+  getAvailableJobs(userId?: number): Observable<Job[]> {
+    if (userId) {
+      return this.http.get<Job[]>(`${this.apiUrl}?userId=${userId}`);
+    }
     return this.http.get<Job[]>(this.apiUrl);
   }
 
@@ -38,7 +41,10 @@ export class JobService {
     return this.http.get<Job[]>(`${this.apiUrl}/my-jobs/${creatorId}`);
   }
 
-  getJob(id: number): Observable<Job> {
+  getJob(id: number, userId?: number): Observable<Job> {
+    if (userId) {
+      return this.http.get<Job>(`${this.apiUrl}/${id}?userId=${userId}`);
+    }
     return this.http.get<Job>(`${this.apiUrl}/${id}`);
   }
 }

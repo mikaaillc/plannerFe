@@ -212,7 +212,11 @@ export class JobCreateComponent implements OnInit {
       },
       error: (err) => {
         this.isLoading = false;
-        this.error = 'İş oluşturulurken bir hata oluştu.';
+        if (err.error && typeof err.error === 'string') {
+          this.error = err.error;
+        } else {
+          this.error = 'İş oluşturulurken bir hata oluştu.';
+        }
         console.error(err);
       }
     });

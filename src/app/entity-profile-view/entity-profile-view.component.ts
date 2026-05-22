@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { API_URL } from '../config';
 import { HttpClient } from '@angular/common/http';
 import { ThemeService } from '../services/theme.service';
 
@@ -121,7 +122,7 @@ export class EntityProfileViewComponent implements OnInit {
   entity: any = null;
   loading = true;
 
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = API_URL + '/users';
 
   constructor(
     private route: ActivatedRoute,

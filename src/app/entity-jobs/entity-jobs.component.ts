@@ -25,7 +25,7 @@ import { AuthService, User } from '../services/auth.service';
         <div class="job-card" *ngFor="let job of jobs">
           <div class="job-header">
             <h3>{{ job.title }}</h3>
-            <span class="status-badge" [ngClass]="job.status.toLowerCase()">{{ job.status }}</span>
+            <span class="status-badge" [ngClass]="job.status.toLowerCase()">{{ translateStatus(job.status) }}</span>
           </div>
           
           <p class="job-desc">{{ job.description }}</p>
@@ -105,5 +105,15 @@ export class EntityJobsComponent implements OnInit {
 
   viewDetails(jobId: number) {
     this.router.navigate(['/job-detail', jobId]);
+  }
+
+  translateStatus(status: string): string {
+    switch (status) {
+      case 'OPEN': return 'AÇIK';
+      case 'IN_PROGRESS': return 'DEVAM EDİYOR';
+      case 'COMPLETED': return 'TAMAMLANDI';
+      case 'CANCELLED': return 'İPTAL EDİLDİ';
+      default: return status;
+    }
   }
 }

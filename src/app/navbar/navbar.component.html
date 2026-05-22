@@ -28,7 +28,8 @@
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER'" (click)="router.navigate(['/profile'])">✏️ Profilim</button>
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-jobs'])">🏢 İşlerim</button>
     <button class="btn btn-outline" *ngIf="user.role === 'ROLE_ENTITY'" (click)="router.navigate(['/entity-profile'])">✏️ Profilim</button>
-    <button class="btn btn-outline" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/subscribe'])">⭐ Abonelik</button>
+    <button class="btn btn-outline" *ngIf="user.role === 'ROLE_PLANNER' && user.subscriptionType === 'PREMIUM_PLANNER'" (click)="router.navigate(['/partner-search'])">🤝 Partner Bul</button>
+    <button class="btn btn-outline" *ngIf="user.role !== 'ROLE_ADMIN'" (click)="router.navigate(['/pricing'])">⭐ Paketler</button>
     <span class="user-badge">{{user.fullName}} <small>({{user.role === 'ROLE_PLANNER' ? 'Plancı' : user.role === 'ROLE_ADMIN' ? 'Admin' : 'Kurum'}})</small></span>
     
     <label class="theme-switch">

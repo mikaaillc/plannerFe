@@ -16,16 +16,16 @@ import { AuthService, User } from '../services/auth.service';
 
       <div *ngIf="isLoading" class="loading">Yükleniyor...</div>
       
-      <div *ngIf="!currentUser?.isPaid" class="alert-box error">
-        İşleri görmek ve teklif vermek için aktif bir aboneliğiniz (üyeliğiniz) olmalıdır. 
-        <button class="btn btn-primary" (click)="router.navigate(['/subscription'])">Abonelik Al</button>
+      <div *ngIf="currentUser?.subscriptionType === 'FREE_PLANNER'" class="alert-box error">
+        Ücretsiz plancı olarak kurum adlarını gizli görüyorsunuz ve teklif veremezsiniz. 
+        <button class="btn btn-primary" (click)="router.navigate(['/pricing'])">Paketleri İncele</button>
       </div>
 
-      <div *ngIf="currentUser?.isPaid && !isLoading && jobs.length === 0" class="no-data">
+      <div *ngIf="!isLoading && jobs.length === 0" class="no-data">
         Şu an açık bir planlama işi bulunmuyor.
       </div>
 
-      <div class="jobs-list" *ngIf="currentUser?.isPaid && !isLoading && jobs.length > 0">
+      <div class="jobs-list" *ngIf="!isLoading && jobs.length > 0">
         <div class="job-card" *ngFor="let job of jobs">
           <div class="job-header">
             <h3>{{ job.title }}</h3>
@@ -45,7 +45,9 @@ import { AuthService, User } from '../services/auth.service';
           </div>
           <div class="job-actions" style="display:flex; gap: 1rem;">
             <button class="btn btn-outline" (click)="viewDetails(job.id)">Detayları Gör</button>
-            <button class="btn btn-primary" (click)="openOfferModal(job)">Teklif Ver</button>
+            <button class="btn btn-primary" [disabled]="currentUser?.subscriptionType === 'FREE_PLANNER'" (click)="openOfferModal(job)">
+              {{ currentUser?.subscriptionType === 'FREE_PLANNER' ? 'Teklif Verme Kapalı' : 'Teklif Ver' }}
+            </button>
           </div>
         </div>
       </div>
@@ -153,16 +155,12 @@ export class PlannerAvailableJobsComponent implements OnInit {
       return;
     }
     
-    if (this.currentUser.isPaid) {
-      this.loadJobs();
-    } else {
-      this.isLoading = false;
-    }
+    this.loadJobs();
   }
 
   loadJobs() {
     this.isLoading = true;
-    this.jobService.getAvailableJobs().subscribe({
+    this.jobService.getAvailableJobs(this.currentUser?.id).subscribe({
       next: (data) => {
         this.jobs = data;
         this.isLoading = false;
@@ -227,7 +225,11 @@ export class PlannerAvailableJobsComponent implements OnInit {
       },
       error: (err) => {
         this.isSubmitting = false;
-        alert('Teklif gönderilirken hata oluştu.');
+        if (err.error && typeof err.error === 'string') {
+          alert(err.error);
+        } else {
+          alert('Teklif gönderilirken hata oluştu.');
+        }
         console.error(err);
       }
     });

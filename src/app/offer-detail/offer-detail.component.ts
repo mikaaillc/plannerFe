@@ -18,7 +18,7 @@ import { ThemeService } from '../services/theme.service';
             <div>
               <h2>Teklif: {{offer.title}}</h2>
               <div class="meta">
-                <span class="status" [ngClass]="offer.status.toLowerCase()">{{offer.status}}</span>
+                <span class="status" [ngClass]="offer.status.toLowerCase()">{{translateStatus(offer.status)}}</span>
                 <span class="date">{{offer.createdAt | date:'dd.MM.yyyy HH:mm'}}</span>
               </div>
             </div>
@@ -192,6 +192,20 @@ export class OfferDetailComponent implements OnInit {
         this.newCommentText = '';
         this.loadComments(this.offer!.id);
       });
+    }
+  }
+
+  translateStatus(status: string): string {
+    switch (status) {
+      case 'OPEN': return 'AÇIK';
+      case 'IN_PROGRESS': return 'DEVAM EDİYOR';
+      case 'COMPLETED': return 'TAMAMLANDI';
+      case 'CANCELLED': return 'İPTAL EDİLDİ';
+      case 'PENDING': return 'BEKLİYOR';
+      case 'ACCEPTED': return 'KABUL EDİLDİ';
+      case 'REJECTED': return 'REDDEDİLDİ';
+      case 'NEGOTIATING': return 'GÖRÜŞÜLÜYOR';
+      default: return status;
     }
   }
 }

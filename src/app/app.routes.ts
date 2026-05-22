@@ -10,6 +10,8 @@ import { EntityProfileEditComponent } from './entity-profile-edit/entity-profile
 import { EntityProfileViewComponent } from './entity-profile-view/entity-profile-view.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
+import { PricingComponent } from './pricing/pricing.component';
+import { PartnerSearchComponent } from './partner-search/partner-search.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +20,8 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'planners', component: PlannersComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'pricing', component: PricingComponent },
+  { path: 'partner-search', component: PartnerSearchComponent },
   { path: 'entity-profile', component: EntityProfileEditComponent },
   { path: 'entity/:id', component: EntityProfileViewComponent },
   { path: 'job-create', loadComponent: () => import('./job-create/job-create.component').then(m => m.JobCreateComponent) },
@@ -30,6 +34,6 @@ export const routes: Routes = [
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'subscribe', component: SubscriptionComponent },
   { path: '**', redirectTo: '' }
+
+
 ];
-
-

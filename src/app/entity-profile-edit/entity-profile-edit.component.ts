@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, User } from '../services/auth.service';
 import { ThemeService } from '../services/theme.service';
+import { SubscriptionService } from '../services/subscription.service';
+import { API_URL } from '../config';
 
 @Component({
   selector: 'app-entity-profile-edit',
@@ -33,6 +35,17 @@ import { ThemeService } from '../services/theme.service';
 
             <div class="skill-chips" *ngIf="form.skills">
               <span class="chip" *ngFor="let s of getSkillList()">{{ s }}</span>
+            </div>
+
+            <div class="preview-card mt-4">
+              <h3 class="section-title">Üyelik Bilgilerim</h3>
+              <div class="membership-info">
+                <p><strong>Paket:</strong> {{ user?.subscriptionType || 'Ücretsiz' }}</p>
+                <p *ngIf="user?.isPaid"><strong>Geçerlilik:</strong> {{ user?.subscriptionExpiryDate | date:'dd.MM.yyyy' || 'Sınırsız' }}</p>
+                
+                <button class="btn btn-outline-primary mt-2" (click)="goToPricing()">Paketleri Görüntüle</button>
+                <button *ngIf="user?.isPaid" class="btn btn-outline-danger mt-2" (click)="cancelSubscription()">Üyeliği İptal Et</button>
+              </div>
             </div>
           </div>
         </aside>
@@ -130,6 +143,13 @@ import { ThemeService } from '../services/theme.service';
     .skill-chips, .skill-preview { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; justify-content: center; }
     .chip { background: #faf5ff; color: #6b46c1; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; border: 1px solid #e9d8fd; }
     .skill-preview { justify-content: flex-start; margin-top: 0.75rem; }
+    .mt-4 { margin-top: 1.5rem; }
+    .mt-2 { margin-top: 0.75rem; }
+    .btn-outline-primary { border: 1px solid var(--purple-primary); background: transparent; color: var(--purple-primary); width: 100%; }
+    .btn-outline-primary:hover { background: var(--purple-primary); color: white; }
+    .btn-outline-danger { border: 1px solid #e53e3e; background: transparent; color: #e53e3e; width: 100%; }
+    .btn-outline-danger:hover { background: #e53e3e; color: white; }
+    .membership-info p { margin-bottom: 0.5rem; font-size: 0.9rem; }
 
     .edit-panel { display: flex; flex-direction: column; gap: 1.5rem; }
     .section-card { background: var(--card-bg); border-radius: 12px; padding: 1.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
@@ -170,13 +190,14 @@ export class EntityProfileEditComponent implements OnInit {
     location: '', phone: '', website: ''
   };
 
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = API_URL + '/users';
 
   constructor(
     private authService: AuthService,
     private http: HttpClient,
     public router: Router,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private subscriptionService: SubscriptionService
   ) {}
 
   ngOnInit() {
@@ -224,5 +245,25 @@ export class EntityProfileEditComponent implements OnInit {
         this.errorMsg = 'Kayıt sırasında bir hata oluştu.';
       }
     });
+  }
+
+  goToPricing() {
+    this.router.navigate(['/pricing']);
+  }
+
+  cancelSubscription() {
+    if (!this.user) return;
+    if (confirm('Üyeliğinizi iptal etmek istediğinize emin misiniz? Bu işlem geri alınamaz.')) {
+      this.subscriptionService.cancelSubscription(this.user.id).subscribe({
+        next: (updatedUser) => {
+          this.authService.setCurrentUser(updatedUser);
+          this.user = updatedUser;
+          alert('Üyeliğiniz başarıyla iptal edildi.');
+        },
+        error: () => {
+          alert('Bir hata oluştu.');
+        }
+      });
+    }
   }
 }

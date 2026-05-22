@@ -21,7 +21,7 @@ import { AuthService, User } from '../services/auth.service';
       <div *ngIf="job" class="job-info-card">
         <h3>İş: {{ job.title }}</h3>
         <p><strong>Min. Karne İsteği:</strong> {{ job.minKarne }}</p>
-        <p><strong>Durum:</strong> {{ job.status }}</p>
+        <p><strong>Durum:</strong> {{ translateStatus(job.status) }}</p>
       </div>
 
       <div *ngIf="!isLoading && offers.length === 0" class="no-data">
@@ -36,7 +36,7 @@ import { AuthService, User } from '../services/auth.service';
               <span class="planner-karne">Kendi Karnesi: {{ offer.sender.karne || 'Belirtilmedi' }}</span>
               <span *ngIf="offer.partnerKarnes" class="partner-karne">| Partner Karneleri: {{ offer.partnerKarnes }}</span>
             </div>
-            <span class="status-badge" [ngClass]="offer.status.toLowerCase()">{{ offer.status }}</span>
+            <span class="status-badge" [ngClass]="offer.status.toLowerCase()">{{ translateStatus(offer.status) }}</span>
           </div>
           
           <div class="offer-details">
@@ -46,12 +46,10 @@ import { AuthService, User } from '../services/auth.service';
           </div>
           
           <div class="offer-actions" *ngIf="offer.status === 'PENDING' && job?.status === 'OPEN'">
-            <button class="btn btn-success" (click)="acceptOffer(offer.id)">Teklifi Kabul Et</button>
+            <button class="btn btn-outline" (click)="viewOfferDetails(offer.id)">Detayları Gör / Mesajlaş</button>
           </div>
-          
-          <!-- Yorum Alanı -->
-          <div class="comments-section" style="margin-top: 1rem;">
-             <button class="btn btn-outline" (click)="viewComments(offer.id)">Yorumlar / Mesajlaşma</button>
+          <div class="offer-actions" *ngIf="offer.status !== 'PENDING'">
+            <button class="btn btn-outline" (click)="viewOfferDetails(offer.id)">Teklif Detayları</button>
           </div>
         </div>
       </div>
@@ -132,7 +130,21 @@ export class JobOffersComponent implements OnInit {
     this.router.navigate(['/planners', plannerId]);
   }
   
-  viewComments(offerId: number) {
+  viewOfferDetails(offerId: number) {
     this.router.navigate(['/offer-detail', offerId]);
+  }
+
+  translateStatus(status: string): string {
+    switch (status) {
+      case 'OPEN': return 'AÇIK';
+      case 'IN_PROGRESS': return 'DEVAM EDİYOR';
+      case 'COMPLETED': return 'TAMAMLANDI';
+      case 'CANCELLED': return 'İPTAL EDİLDİ';
+      case 'PENDING': return 'BEKLİYOR';
+      case 'ACCEPTED': return 'KABUL EDİLDİ';
+      case 'REJECTED': return 'REDDEDİLDİ';
+      case 'NEGOTIATING': return 'GÖRÜŞÜLÜYOR';
+      default: return status;
+    }
   }
 }

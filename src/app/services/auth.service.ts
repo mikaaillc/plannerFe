@@ -11,8 +11,13 @@ export interface User {
   role: string;
   entityType?: string;
   karne?: string;
+  phone?: string;
   isPaid?: boolean;
   subscriptionType?: string;
+  subscriptionExpiryDate?: string;
+  bio?: string;
+  location?: string;
+  skills?: string;
 }
 
 @Injectable({
@@ -49,6 +54,11 @@ export class AuthService {
 
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
+  }
+
+  setCurrentUser(user: User) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.currentUserSubject.next(user);
   }
 
   getAllUsers(): Observable<User[]> {
