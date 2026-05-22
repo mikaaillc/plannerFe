@@ -219,7 +219,8 @@ import { AiTooltipComponent } from '../components/ai-tooltip/ai-tooltip.componen
       .hero p { font-size: 1rem; }
       .hero-buttons { justify-content: center; flex-direction: column; width: 100%; }
       .hero-buttons .btn { width: 100%; }
-      .about { padding: 3rem 1rem; }
+      .about { padding: 3rem 1rem; scroll-margin-top: 20px; }
+      .pricing { padding: 3rem 1rem; scroll-margin-top: 20px; }
       .about-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     }
   `]

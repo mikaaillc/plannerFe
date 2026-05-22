@@ -18,7 +18,7 @@
 :host-context(.dark) .logo-img {
   filter: brightness(0) invert(1);
 }
-.logo-img { height: 50px; transition: filter 0.3s ease; }
+.logo-img { height: 85px; transition: filter 0.3s ease; }
 .brand-name { font-size: 1.5rem; font-weight: 600; font-family: 'Inter', sans-serif; }
 .nav-links { display: flex; gap: 1.5rem; align-items: center; }
 .nav-links a { text-decoration: none; color: var(--text-secondary); font-weight: 500; transition: color 0.2s; }
@@ -35,7 +35,8 @@
 .btn-logout:hover { background: #e53e3e; border-color: #e53e3e; }
 
 @media (max-width: 768px) {
-  .global-navbar { flex-direction: column; padding: 1rem; gap: 1rem; }
+  .global-navbar { flex-direction: column; padding: 1rem; gap: 1rem; position: relative; }
+  .logo-img { height: 60px; }
   .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
 }
 

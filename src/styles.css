@@ -151,3 +151,9 @@ body::after {
     transition: margin-left 0.3s ease, width 0.3s ease;
   }
 }
+
+@media (max-width: 768px) {
+  body::after {
+    background-size: 90vw;
+  }
+}
