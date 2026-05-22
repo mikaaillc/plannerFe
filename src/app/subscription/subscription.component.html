@@ -16,7 +16,7 @@
         <li><i>✓</i> Sınırsız Teklif Verme</li>
         <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
         <li><i>✓</i> Öncelikli Destek</li>
-        <li><i>✓</i> Gemini AI Asistanı</li>
+        <li><i>✓</i> Yapay Zeka Asistanı</li>
       </ul>
       <button class="btn-subscribe" (click)="subscribe('MONTHLY')" [disabled]="isLoading || currentUser?.subscriptionType === 'MONTHLY'">
         {{ currentUser?.subscriptionType === 'MONTHLY' ? 'Mevcut Plan' : 'Aylık Abone Ol' }}
@@ -32,7 +32,7 @@
         <li><i>✓</i> Sınırsız Teklif Verme</li>
         <li><i>✓</i> Tüzel Kişilerden Teklif Alma</li>
         <li><i>✓</i> Premium Profil Rozeti</li>
-        <li><i>✓</i> Gemini AI Asistanı</li>
+        <li><i>✓</i> Yapay Zeka Asistanı</li>
       </ul>
       <button class="btn-subscribe" (click)="subscribe('ANNUAL')" [disabled]="isLoading || currentUser?.subscriptionType === 'ANNUAL'">
         {{ currentUser?.subscriptionType === 'ANNUAL' ? 'Mevcut Plan' : 'Yıllık Abone Ol' }}
