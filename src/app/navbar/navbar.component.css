@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 4rem;
+  padding: 0.5rem 4rem;
   background: var(--bg-navbar);
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   position: sticky;
@@ -18,7 +18,7 @@
 :host-context(.dark) .logo-img {
   filter: brightness(0) invert(1);
 }
-.logo-img { height: 85px; transition: filter 0.3s ease; }
+.logo-img { height: 55px; transition: filter 0.3s ease; }
 .brand-name { font-size: 1.5rem; font-weight: 600; font-family: 'Inter', sans-serif; }
 .nav-links { display: flex; gap: 1.5rem; align-items: center; }
 .nav-links a { text-decoration: none; color: var(--text-secondary); font-weight: 500; transition: color 0.2s; }
@@ -36,7 +36,7 @@
 
 @media (max-width: 768px) {
   .global-navbar { flex-direction: column; padding: 1rem; gap: 1rem; position: relative; }
-  .logo-img { height: 60px; }
+  .logo-img { height: 45px; }
   .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
 }
 
@@ -69,10 +69,10 @@
 
 .sidebar-menu {
   position: fixed;
-  top: 83px;
+  top: 72px;
   left: -300px;
   width: 280px;
-  height: calc(100vh - 83px);
+  height: calc(100vh - 72px);
   background: var(--card-bg);
   box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   z-index: 999;
@@ -85,7 +85,12 @@
 }
 
 @media (max-width: 1024px) {
-  .logo-img { height: 70px; }
+  .logo-img { height: 50px; }
+  .sidebar-menu {
+    top: 0;
+    height: 100vh;
+    z-index: 10001; /* above overlay which is 10000 */
+  }
 }
 
 @media (min-width: 1025px) {
