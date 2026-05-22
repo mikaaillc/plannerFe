@@ -14,8 +14,8 @@
 
   <!-- Logged Out Links -->
   <div class="nav-links" *ngIf="!user">
-    <a href="#about" *ngIf="router.url === '/'">Hakkımızda</a>
-    <a href="#pricing" *ngIf="router.url === '/'">Fiyatlandırma</a>
+    <a href="#about" *ngIf="isHome()">Hakkımızda</a>
+    <a href="#pricing" *ngIf="isHome()">Fiyatlandırma</a>
     <label class="theme-switch">
       <input type="checkbox" [checked]="themeService.isDark()" (change)="themeService.toggleTheme()">
       <span class="slider round">

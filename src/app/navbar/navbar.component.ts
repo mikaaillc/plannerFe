@@ -31,6 +31,11 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  isHome(): boolean {
+    const url = this.router.url;
+    return url === '/' || url.startsWith('/#');
+  }
+
   goToLogin() {
     if (this.router.url === '/login') {
       window.location.reload();
